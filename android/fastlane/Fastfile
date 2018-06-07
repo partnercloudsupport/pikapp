@@ -12,7 +12,7 @@ update_fastlane
 default_platform(:android)
 
 platform :android do
-  desc "Submit a new Beta Build to the Google Play"
+  desc "Submit a new Beta build to the Google Play"
   lane :beta do
     supply(package_name: 'yt.pikatea.app', track: 'beta')
   end

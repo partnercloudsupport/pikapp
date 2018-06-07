@@ -1,5 +1,6 @@
 name: pikapp
-description: Pikatea's app!
+description: Pikatea\'s app!
+version: 0.1.4+4
 
 dependencies:
   flutter:
@@ -21,8 +22,8 @@ dev_dependencies:
     sdk: flutter
 
 environment:
-  sdk: ">=2.0.0-edge <2.1.0"
-  flutter: "^0.3.1"
+  sdk: ">=2.0.0-dev <2.1.0"
+  flutter: "^0.4.4"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

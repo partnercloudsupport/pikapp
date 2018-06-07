@@ -2,13 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
-import 'components/video_list.dart';
 import 'components/buttons/notifications.dart';
 import 'components/buttons/review.dart';
 
+import 'tabs/channel.dart';
 import 'tabs/home.dart';
 import 'tabs/shop.dart';
-import 'tabs/info.dart';
 
 import 'navigation.dart';
 
@@ -21,9 +20,8 @@ class HomePage extends StatelessWidget {
 
   final List<Widget> _children = <Widget>[
     HomeTab(),
-    VideoList(),
+    ChannelTab(),
     ShopTab(),
-    InfoTab(),
   ];
 
   void _onPressed() async {

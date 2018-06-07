@@ -8,21 +8,20 @@ class NavigationBar extends StatefulWidget {
 class _NavigationBarState extends State<NavigationBar> {
   final List<BottomNavigationBarItem> _items = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
-        backgroundColor: Colors.pink[300],
-        icon: Icon(Icons.home),
-        title: Text('Home')),
+      backgroundColor: Colors.pink[300],
+      icon: Icon(Icons.home),
+      title: Text('Home'),
+    ),
     BottomNavigationBarItem(
-        backgroundColor: Colors.red[600],
-        icon: Icon(Icons.play_circle_filled),
-        title: Text('Channel')),
+      backgroundColor: Colors.red[600],
+      icon: Icon(Icons.play_circle_filled),
+      title: Text('Canale'),
+    ),
     BottomNavigationBarItem(
-        backgroundColor: Colors.orange[700],
-        icon: Icon(Icons.shopping_basket),
-        title: Text('Shop')),
-    BottomNavigationBarItem(
-        backgroundColor: Colors.indigo[400],
-        icon: Icon(Icons.info),
-        title: Text('Info'))
+      backgroundColor: Colors.orange[700],
+      icon: Icon(Icons.store),
+      title: Text('Negozio'),
+    ),
   ];
 
   int _currentIndex = 0;
@@ -44,8 +43,8 @@ class _NavigationBarState extends State<NavigationBar> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: _currentIndex,
-      onTap: _onTap,
       items: _items,
+      onTap: _onTap,
     );
   }
 }

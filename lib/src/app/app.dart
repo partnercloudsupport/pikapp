@@ -11,7 +11,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: HomePage(title: this.title),
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.pink,
       ),
       title: this.title,
     );
