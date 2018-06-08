@@ -1,0 +1,29 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+update_fastlane
+
+platform :android do
+
+  desc "Deploy a new build to the Google Play"
+  lane :deploy do
+    # build() TODO: manual with flutter atm
+    upload
+  end
+
+  desc "Upload a new build to the Google Play"
+  lane :upload do |options|
+    if options[:beta]
+      supply(track: 'beta')
+    else
+      supply
+    end
+  end
+
+end

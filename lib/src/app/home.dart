@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import 'components/buttons/notifications.dart';
@@ -12,7 +13,7 @@ import 'tabs/shop.dart';
 import 'navigation.dart';
 
 class HomePage extends StatelessWidget {
-  static final String url = "https://www.messenger.com/t/pikateachannel";
+  static final String url = 'https://urlgeni.us/fb_messenger/pikatea';
 
   final String title;
 
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.chat_bubble),
+          child: Icon(FontAwesomeIcons.facebookMessenger),
           onPressed: _onPressed,
           tooltip: 'Chat with me!',
         ),

@@ -36,14 +36,14 @@ class HomeTab extends StatelessWidget {
     }
   }
 
-  void _goToFacebook() => _goTo('https://www.facebook.com/pikateadiys/');
-  void _goToInstagram() => _goTo('https://www.instagram.com/pikateayt/');
-  void _goToTwitter() => _goTo('https://twitter.com/pikateayt/');
-  void _goToYoutube() => _goTo('https://www.youtube.com/user/Pikatea/');
-  void _goToPinterest() => _goTo('https://pinterest.com/Pikatea/pins/');
+  void _goToFacebook() => _goTo('https://urlgeni.us/facebook/pikatea');
+  void _goToGooglePlus() => _goTo('https://urlgeni.us/gplus/pikatea');
+  void _goToInstagram() => _goTo('https://urlgeni.us/instagram/pikatea');
+  void _goToPinterest() => _goTo('https://urlgeni.us/pinterest/pikatea');
+  void _goToTelegram() => _goTo('https://urlgeni.us/telegram/pikatea');
   void _goToTwitch() => _goTo('https://www.twitch.tv/pikatea/');
-  void _goToGooglePlus() =>
-      _goTo('https://plus.google.com/u/0/107914231113095144113/');
+  void _goToTwitter() => _goTo('https://urlgeni.us/twitter/pikatea');
+  void _goToYoutube() => _goTo('https://urlgeni.us/youtube/pikatea');
 
   @override
   Widget build(BuildContext context) {
@@ -84,29 +84,50 @@ class HomeTab extends StatelessWidget {
               spacing: 16.0,
               runSpacing: 16.0,
               children: <Widget>[
-                SocialIconButton(FontAwesomeIcons.facebook,
-                    onPressed: _goToFacebook,
-                    color: Color.fromRGBO(65, 89, 147, 1.0)),
-                SocialIconButton(FontAwesomeIcons.instagram,
-                    onPressed: _goToInstagram,
-                    color: Color.fromRGBO(205, 72, 107, 1.0)),
-                SocialIconButton(FontAwesomeIcons.twitter,
-                    onPressed: _goToTwitter,
-                    color: Color.fromRGBO(0, 172, 237, 1.0)),
-                SocialIconButton(FontAwesomeIcons.youtube,
-                    onPressed: _goToYoutube,
-                    color: Color.fromRGBO(230, 33, 23, 1.0)),
-                SocialIconButton(FontAwesomeIcons.pinterest,
-                    onPressed: _goToPinterest,
-                    color: Color.fromRGBO(189, 8, 28, 1.0)),
-                SocialIconButton(FontAwesomeIcons.twitch,
-                    onPressed: _goToTwitch,
-                    color: Color.fromRGBO(75, 54, 124, 1.0)),
-                // SocialIconButton(FontAwesomeIcons.snapchatGhost,
-                //     color: Color.fromRGBO(255, 252, 0, 1.0)),
-                SocialIconButton(FontAwesomeIcons.googlePlusG,
-                    onPressed: _goToGooglePlus,
-                    color: Color.fromRGBO(211, 72, 54, 1.0)),
+                SocialIconButton(
+                  FontAwesomeIcons.facebookF,
+                  onPressed: _goToFacebook,
+                  color: Color.fromRGBO(65, 89, 147, 1.0),
+                ),
+                SocialIconButton(
+                  FontAwesomeIcons.instagram,
+                  onPressed: _goToInstagram,
+                  color: Color.fromRGBO(205, 72, 107, 1.0),
+                ),
+                SocialIconButton(
+                  FontAwesomeIcons.twitter,
+                  onPressed: _goToTwitter,
+                  color: Color.fromRGBO(0, 172, 237, 1.0),
+                ),
+                SocialIconButton(
+                  FontAwesomeIcons.youtube,
+                  onPressed: _goToYoutube,
+                  color: Color.fromRGBO(230, 33, 23, 1.0),
+                ),
+                SocialIconButton(
+                  FontAwesomeIcons.telegramPlane,
+                  onPressed: _goToTelegram,
+                  color: Color.fromRGBO(0, 136, 204, 1.0),
+                ),
+                SocialIconButton(
+                  FontAwesomeIcons.pinterestP,
+                  onPressed: _goToPinterest,
+                  color: Color.fromRGBO(189, 8, 28, 1.0),
+                ),
+                SocialIconButton(
+                  FontAwesomeIcons.googlePlusG,
+                  onPressed: _goToGooglePlus,
+                  color: Color.fromRGBO(211, 72, 54, 1.0),
+                ),
+                SocialIconButton(
+                  FontAwesomeIcons.twitch,
+                  onPressed: _goToTwitch,
+                  color: Color.fromRGBO(75, 54, 124, 1.0),
+                ),
+                // SocialIconButton(
+                //   FontAwesomeIcons.snapchatGhost,
+                //   color: Color.fromRGBO(255, 252, 0, 1.0),
+                // ),
               ],
             ),
           )
