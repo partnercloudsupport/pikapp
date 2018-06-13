@@ -1,0 +1,9 @@
+{
+  "title": "PikApp",
+  "home_tab_title": "Home",
+  "channel_tab_title": "Channel",
+  "shop_tab_title": "Shop",
+  "fab_tooltip": "Chat with me!",
+  "review_tooltip": "Leave a review",
+  "notifications_tooltip": "Toggle notifications"
+}

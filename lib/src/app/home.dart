@@ -1,23 +1,17 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import 'components/buttons/notifications.dart';
 import 'components/buttons/review.dart';
-
+import 'locale/localizations.dart';
+import 'navigation.dart';
 import 'tabs/channel.dart';
 import 'tabs/home.dart';
 import 'tabs/shop.dart';
 
-import 'navigation.dart';
-
 class HomePage extends StatelessWidget {
   static final String url = 'https://urlgeni.us/fb_messenger/pikatea';
-
-  final String title;
-
-  HomePage({@required String this.title, Key key}) : super(key: key);
 
   final List<Widget> _children = <Widget>[
     HomeTab(),
@@ -33,6 +27,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String title = AppLocalizations.of(context).translate('title');
+    String tooltip = AppLocalizations.of(context).translate('fab_tooltip');
+
     return DefaultTabController(
       length: _children.length,
       child: Scaffold(
@@ -49,7 +46,7 @@ class HomePage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           child: Icon(FontAwesomeIcons.facebookMessenger),
           onPressed: _onPressed,
-          tooltip: 'Chat with me!',
+          tooltip: tooltip,
         ),
         bottomNavigationBar: NavigationBar(),
       ),

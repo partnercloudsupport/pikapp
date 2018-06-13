@@ -1,29 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'locale/localizations.dart';
+
 class NavigationBar extends StatefulWidget {
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
 
 class _NavigationBarState extends State<NavigationBar> {
-  final List<BottomNavigationBarItem> _items = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      backgroundColor: Colors.pink[300],
-      icon: Icon(Icons.home),
-      title: Text('Home'),
-    ),
-    BottomNavigationBarItem(
-      backgroundColor: Colors.red[600],
-      icon: Icon(Icons.play_circle_filled),
-      title: Text('Canale'),
-    ),
-    BottomNavigationBarItem(
-      backgroundColor: Colors.orange[700],
-      icon: Icon(Icons.store),
-      title: Text('Negozio'),
-    ),
-  ];
-
   int _currentIndex = 0;
 
   _onTap(int index) {
@@ -41,9 +25,25 @@ class _NavigationBarState extends State<NavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context);
+    final List<BottomNavigationBarItem> items = <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        title: Text(localizations.translate('home_tab_title')),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.play_circle_filled),
+        title: Text(localizations.translate('channel_tab_title')),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.store),
+        title: Text(localizations.translate('shop_tab_title')),
+      ),
+    ];
+
     return BottomNavigationBar(
       currentIndex: _currentIndex,
-      items: _items,
+      items: items,
       onTap: _onTap,
     );
   }
