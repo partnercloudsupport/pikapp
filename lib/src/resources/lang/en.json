@@ -1,9 +1,14 @@
 {
-  "title": "PikApp",
-  "home_tab_title": "Home",
   "channel_tab_title": "Channel",
-  "shop_tab_title": "Shop",
+  "text_later": "Later",
+  "text_sure": "Sure!",
   "fab_tooltip": "Chat with me!",
+  "home_tab_title": "Home",
+  "notifications_tooltip": "Toggle notifications",
   "review_tooltip": "Leave a review",
-  "notifications_tooltip": "Toggle notifications"
+  "review_dialog_title": "Enjoying PikApp?",
+  "review_dialog_content":
+    "Leave a review on the store to contribute to the growth of the project!",
+  "shop_tab_title": "Shop",
+  "title": "PikApp"
 }

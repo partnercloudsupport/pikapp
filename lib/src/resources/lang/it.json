@@ -1,9 +1,14 @@
 {
-  "title": "PikApp",
-  "home_tab_title": "Home",
   "channel_tab_title": "Canale",
-  "shop_tab_title": "Negozio",
+  "text_later": "Più tardi",
+  "text_sure": "Certo!",
   "fab_tooltip": "Scrivimi qualcosa!",
+  "home_tab_title": "Home",
+  "notifications_tooltip": "Attiva/disattiva notifiche",
   "review_tooltip": "Lascia una recensione",
-  "notifications_tooltip": "Attiva/disattiva notifiche"
+  "review_dialog_title": "Ti piace PikApp?",
+  "review_dialog_content":
+    "Lascia una recensione sullo store per contribuire alla crescita del progetto!",
+  "shop_tab_title": "Negozio",
+  "title": "PikApp"
 }
