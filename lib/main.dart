@@ -31,10 +31,11 @@ Future<void> main() async {
     }
 
     final Sentry sentry = Sentry(
-        environment: environment,
-        release: package.version,
-        loggerName: package.packageName,
-        serverName: device);
+      environment: environment,
+      loggerName: package.packageName,
+      release: package.version,
+      serverName: device,
+    );
 
     FlutterError.onError = (FlutterErrorDetails details) =>
         sentry.reportError(details.exception, details.stack);

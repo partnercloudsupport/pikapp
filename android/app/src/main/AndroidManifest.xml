@@ -1,5 +1,4 @@
-<manifest 
-    xmlns:android="http://schemas.android.com/apk/res/android" package="yt.pikatea.app">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="yt.pikatea.app">
     <!-- The INTERNET permission is required for development. Specifically,
          flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
@@ -17,9 +16,17 @@
                  there is no splash screen (such as the default splash screen
                  defined in @style/LaunchTheme). -->
             <meta-data android:name="io.flutter.app.android.SplashScreenUntilFirstFrame" android:value="true" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <!-- This is needed to keep track and be notified
+                 when the user clicks on a notification in the system tray. -->
+            <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

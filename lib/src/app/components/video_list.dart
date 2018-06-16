@@ -87,8 +87,6 @@ class _VideoListState extends State<VideoList> {
       child: FutureBuilder(
         future: _future,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          print(snapshot.hasData);
-          print(snapshot);
           if (snapshot.hasData) {
             return ListView.builder(
                 padding: kMaterialListPadding,

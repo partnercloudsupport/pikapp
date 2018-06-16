@@ -13,8 +13,6 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
     AppLocalizations localizations = new AppLocalizations(locale);
     await localizations.load();
 
-    print("Load ${locale.languageCode}");
-
     return localizations;
   }
 

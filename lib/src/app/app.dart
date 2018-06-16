@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'package:pikapp/src/analytics.dart';
+import 'package:pikapp/src/messaging.dart';
+
 import 'home.dart';
 import 'locale/localizations.dart';
 
 class App extends StatelessWidget {
+  App() {
+    messaging.configure(
+      onMessage: (Map<String, dynamic> message) {
+        debugPrint("onMessage: $message");
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        debugPrint("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) {
+        debugPrint("onResume: $message");
+      },
+    );
+  }
+
   static final List<LocalizationsDelegate> localizationsDelegates = [
     AppLocalizations.delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
   ];
+
+  static final navigatorObservers = [analyticsObserver];
 
   static final List<Locale> supportedLocales = [
     Locale('it'),
@@ -37,6 +56,7 @@ class App extends StatelessWidget {
       home: HomePage(),
       localizationsDelegates: localizationsDelegates,
       localeResolutionCallback: localeResolutionCallback,
+      navigatorObservers: navigatorObservers,
       onGenerateTitle: onGenerateTitle,
       supportedLocales: supportedLocales,
       theme: ThemeData(

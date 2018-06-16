@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pikapp/src/analytics.dart';
+import 'package:pikapp/src/messaging.dart';
 
 import '../../locale/localizations.dart';
 
@@ -25,6 +26,8 @@ class NotificationIconButton extends StatelessWidget {
       icon: Icon(Icons.notifications),
       onPressed: () {
         analytics.logEvent(name: 'notification_button');
+        messaging.requestNotificationPermissions();
+
         Scaffold.of(context).showSnackBar(_snackBar);
       },
       tooltip: tooltip,
