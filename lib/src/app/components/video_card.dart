@@ -4,22 +4,27 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class VideoCard extends StatelessWidget {
-  final Map<String, dynamic> data;
+  VideoCard({
+    @required String videoId,
+    @required String this.thumbnailUrl,
+    @required String this.title,
+    @required String this.description,
+  }) : videoUrl = 'https://youtu.be/$videoId';
 
-  VideoCard(Map<String, dynamic> this.data);
+  VideoCard.fromData(Map<String, dynamic> data)
+      : videoUrl = 'https://youtu.be/${data['id']['videoId']}',
+        thumbnailUrl = data['snippet']['thumbnails']['high']['url'],
+        title = data['snippet']['title'],
+        description = data['snippet']['description'];
 
-  void _watch() async {
-    final String url =
-        "https://www.youtube.com/watch?v=${data['id']['videoId']}";
-    if (await url_launcher.canLaunch(url)) {
-      await url_launcher.launch(url);
-    }
-  }
+  final String videoUrl;
+  final String thumbnailUrl;
+  final String title;
+  final String description;
 
-  void _share() {
-    final String url = "https://youtu.be/${data['id']['videoId']}";
-    share(url);
-  }
+  void _watch() => url_launcher.launch(videoUrl);
+
+  void _share() => share(videoUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +40,9 @@ class VideoCard extends StatelessWidget {
                 aspectRatio: 16 / 9,
                 child: FadeInImage.memoryNetwork(
                   placeholder: kTransparentImage,
-                  image: data['snippet']['thumbnails']['high']['url'],
+                  image: thumbnailUrl,
                   fit: BoxFit.fitWidth,
-                  fadeOutDuration: Duration(),
+                  fadeOutDuration: Duration(milliseconds: 0),
                   fadeInDuration: Duration(milliseconds: 150),
                 ),
               ),
@@ -46,13 +51,13 @@ class VideoCard extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      data['snippet']['title'],
+                      title,
                       style: TextStyle(fontSize: 24.0),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 16.0),
                       child: Text(
-                        data['snippet']['description'],
+                        description,
                         style: TextStyle(fontSize: 14.0),
                       ),
                     ),

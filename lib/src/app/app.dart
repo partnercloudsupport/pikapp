@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:pikapp/src/analytics.dart';
-import 'package:pikapp/src/messaging.dart';
-
+import '../analytics.dart';
+import '../messaging.dart';
 import 'home.dart';
 import 'locale/localizations.dart';
 
@@ -11,15 +10,17 @@ class App extends StatelessWidget {
   App() {
     messaging.configure(
       onMessage: (Map<String, dynamic> message) {
-        debugPrint("onMessage: $message");
+        debugPrint('onMessage: $message');
       },
       onLaunch: (Map<String, dynamic> message) {
-        debugPrint("onLaunch: $message");
+        debugPrint('onLaunch: $message');
       },
       onResume: (Map<String, dynamic> message) {
-        debugPrint("onResume: $message");
+        debugPrint('onResume: $message');
       },
     );
+
+    messaging.requestNotificationPermissions();
   }
 
   static final List<LocalizationsDelegate> localizationsDelegates = [
@@ -38,8 +39,7 @@ class App extends StatelessWidget {
   static Locale localeResolutionCallback(
       Locale locale, Iterable<Locale> supportedLocales) {
     for (Locale supportedLocale in supportedLocales) {
-      if (supportedLocale.languageCode == locale.languageCode ||
-          supportedLocale.countryCode == locale.countryCode) {
+      if (supportedLocale.languageCode == locale.languageCode) {
         return supportedLocale;
       }
     }
@@ -60,6 +60,7 @@ class App extends StatelessWidget {
       onGenerateTitle: onGenerateTitle,
       supportedLocales: supportedLocales,
       theme: ThemeData(
+        fontFamily: 'Nunito',
         primarySwatch: Colors.pink,
       ),
     );

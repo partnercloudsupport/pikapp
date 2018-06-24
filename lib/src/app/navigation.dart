@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'locale/localizations.dart';
 
-class NavigationBar extends StatefulWidget {
+class AppNavigationBar extends StatefulWidget {
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
 
-class _NavigationBarState extends State<NavigationBar> {
+class _NavigationBarState extends State<AppNavigationBar> {
   int _currentIndex = 0;
 
   _onTap(int index) {

@@ -1,14 +1,20 @@
 {
   "channel_tab_title": "Canale",
-  "text_later": "Più tardi",
-  "text_sure": "Certo!",
   "fab_tooltip": "Scrivimi qualcosa!",
   "home_tab_title": "Home",
-  "notifications_tooltip": "Attiva/disattiva notifiche",
-  "review_tooltip": "Lascia una recensione",
-  "review_dialog_title": "Ti piace PikApp?",
   "review_dialog_content":
     "Lascia una recensione sullo store per contribuire alla crescita del progetto!",
+  "review_dialog_title": "Ti piace PikApp?",
+  "review_tooltip": "Lascia una recensione",
   "shop_tab_title": "Negozio",
+  "text_coming_soon": "Presto disponibile!",
+  "text_curious_person": "Sei una persona curiosa, non è vero?",
+  "text_later": "Più tardi",
+  "text_mystery_button": "Hai trovato il pulsante misterioso!",
+  "text_retry_later": "Per favore riprova più tardi.",
+  "text_retry": "Riprova",
+  "text_something_wrong": "Oops! Qualcosa è andato storto...",
+  "text_sure": "Certo!",
+  "text_surprise": "È una sorpresa...",
   "title": "PikApp"
 }
