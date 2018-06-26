@@ -23,7 +23,7 @@ class EventFloatingActionButton extends StatelessWidget {
         MaterialLocalizations.of(context);
 
     return FloatingActionButton(
-      child: Icon(Icons.whatshot),
+      child: Icon(Icons.flash_on),
       onPressed: () {
         analytics.logEvent(name: 'fab_button');
 

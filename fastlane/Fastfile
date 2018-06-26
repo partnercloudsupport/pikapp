@@ -7,23 +7,6 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-update_fastlane
+# update_fastlane
 
-platform :android do
-
-  desc "Deploy a new build to the Google Play"
-  lane :deploy do
-    # build() TODO: manual with flutter atm
-    upload
-  end
-
-  desc "Upload a new build to the Google Play"
-  lane :upload do |options|
-    if options[:beta]
-      supply(track: 'beta')
-    else
-      supply
-    end
-  end
-
-end
+import '../android/fastlane/Fastfile'

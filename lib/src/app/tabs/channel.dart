@@ -12,8 +12,8 @@ class ChannelTab extends StatefulWidget {
   _ChannelTabState createState() => _ChannelTabState();
 }
 
-class _ChannelTabState extends State<ChannelTab>
-    with AfterLayoutMixin<ChannelTab> {
+// * FIXME class _ChannelTabState extends State<ChannelTab> with AfterLayoutMixin<ChannelTab> {
+class _ChannelTabState extends AfterLayoutMixin<ChannelTab> {
   static final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 

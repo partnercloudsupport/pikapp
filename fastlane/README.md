@@ -20,12 +20,22 @@ or alternatively using `brew cask install fastlane`
 ```
 fastlane android deploy
 ```
-Deploy a new build to the Google Play
+Deploy (build and upload) a new version to the Google Play
+### android build
+```
+fastlane android build
+```
+Build a new version of the app
 ### android upload
 ```
 fastlane android upload
 ```
 Upload a new build to the Google Play
+### android finish
+```
+fastlane android finish
+```
+Notify the new built version
 
 ----
 

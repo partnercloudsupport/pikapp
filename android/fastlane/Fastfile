@@ -1,3 +1,36 @@
-import "../fastlane/Fastfile"
-
 default_platform(:android)
+
+platform :android do
+
+  desc "Deploy (build and upload) a new version to the Google Play"
+  lane :deploy do
+    build
+    upload(beta: true)
+    finish
+  end
+
+  desc "Build a new version of the app"
+  lane :build do
+    # ensure_git_status_clean(show_uncommitted_changes: true)
+
+    Dir.chdir('../') {
+      sh("flutter", "analyze")
+      sh("flutter", "build", "apk")
+    }
+  end
+
+  desc "Upload a new build to the Google Play"
+  lane :upload do |options|
+    if options[:beta]
+      supply(track: 'beta')
+    else
+      supply
+    end
+  end
+
+  desc "Notify the new built version"
+  lane :finish do
+    notification(subtitle: "PikApp", message: "Build uploaded!")
+  end
+
+end
