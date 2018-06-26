@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../analytics.dart';
 import '../messaging.dart';
-import 'home.dart';
+import 'navigation.dart';
 import 'locale/localizations.dart';
 
 class App extends StatelessWidget {
@@ -53,7 +53,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: AppNavigation(),
       localizationsDelegates: localizationsDelegates,
       localeResolutionCallback: localeResolutionCallback,
       navigatorObservers: navigatorObservers,
