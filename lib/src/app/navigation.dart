@@ -16,34 +16,40 @@ class NavigationView {
     @required String title,
     @required TickerProvider vsync,
   })  : _child = child,
-        item = BottomNavigationBarItem(
-          icon: icon,
-          title: Text(title),
-        ),
         controller = AnimationController(
           duration: kThemeAnimationDuration,
           vsync: vsync,
+        ),
+        item = BottomNavigationBarItem(
+          icon: icon,
+          title: Text(title),
         ) {
-    _animation = CurvedAnimation(
+    final Interval interval = Interval(0.5, 1.0, curve: Curves.fastOutSlowIn);
+
+    _opacity = CurvedAnimation(
       parent: controller,
-      curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
+      curve: interval,
     );
+
+    _scale = Tween(begin: 0.97, end: 1.0).animate(CurvedAnimation(
+      parent: controller,
+      curve: interval,
+      reverseCurve: Threshold(0.0),
+    ));
   }
 
   final Widget _child;
-  final BottomNavigationBarItem item;
   final AnimationController controller;
+  final BottomNavigationBarItem item;
 
-  CurvedAnimation _animation;
+  CurvedAnimation _opacity;
+  Animation<double> _scale;
 
-  FadeTransition transition(BuildContext context) {
+  FadeTransition transition() {
     return FadeTransition(
-      opacity: _animation,
-      child: SlideTransition(
-        position: Tween<Offset>(
-          begin: Offset(0.0, 0.02), // Slightly down.
-          end: Offset.zero,
-        ).animate(_animation),
+      opacity: _opacity,
+      child: ScaleTransition(
+        scale: _scale,
         child: _child,
       ),
     );
@@ -56,7 +62,7 @@ class AppNavigation extends StatefulWidget {
 }
 
 class _AppNavigationState extends State<AppNavigation>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin<AppNavigation> {
   int _currentIndex = 0;
   List<NavigationView> _views;
 
@@ -132,8 +138,7 @@ class _AppNavigationState extends State<AppNavigation>
   Stack _buildTransitionsStack() {
     final List<FadeTransition> transitions = <FadeTransition>[];
 
-    for (NavigationView view in _views)
-      transitions.add(view.transition(context));
+    for (NavigationView view in _views) transitions.add(view.transition());
 
     // We want to have the newly animating (fading in) views on top.
     transitions.sort((FadeTransition a, FadeTransition b) {

@@ -11,18 +11,20 @@ class ShopTab extends StatelessWidget {
     final String text =
         AppLocalizations.of(context).translate('text_coming_soon');
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(24.0),
-          child: Text(text, style: textStyle),
-        ),
-        Image.asset(
-          'lib/assets/icon.png',
-          height: 120.0,
-        ),
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(24.0),
+            child: Text(text, style: textStyle),
+          ),
+          Image.asset(
+            'lib/assets/icon.png',
+            height: 120.0,
+          ),
+        ],
+      ),
     );
   }
 }
