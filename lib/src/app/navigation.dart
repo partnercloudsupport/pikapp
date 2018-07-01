@@ -17,23 +17,23 @@ class NavigationView {
     @required TickerProvider vsync,
   })  : _child = child,
         controller = AnimationController(
-          duration: kThemeAnimationDuration,
+          duration: kThemeAnimationDuration * 0.5,
           vsync: vsync,
         ),
         item = BottomNavigationBarItem(
           icon: icon,
           title: Text(title),
         ) {
-    final Interval interval = Interval(0.5, 1.0, curve: Curves.fastOutSlowIn);
+    final Curve _curve = Curves.fastOutSlowIn;
 
-    _opacity = CurvedAnimation(
+    _opacity = Tween(begin: 0.01, end: 1.0).animate(CurvedAnimation(
       parent: controller,
-      curve: interval,
-    );
+      curve: _curve,
+    ));
 
     _scale = Tween(begin: 0.97, end: 1.0).animate(CurvedAnimation(
       parent: controller,
-      curve: interval,
+      curve: _curve,
       reverseCurve: Threshold(0.0),
     ));
   }
@@ -42,17 +42,18 @@ class NavigationView {
   final AnimationController controller;
   final BottomNavigationBarItem item;
 
-  CurvedAnimation _opacity;
+  Animation<double> _opacity;
   Animation<double> _scale;
 
-  FadeTransition transition() {
-    return FadeTransition(
-      opacity: _opacity,
-      child: ScaleTransition(
-        scale: _scale,
-        child: _child,
-      ),
-    );
+  Widget transition() {
+    return _child;
+    // return FadeTransition(
+    //   opacity: _opacity,
+    //   child: ScaleTransition(
+    //     scale: _scale,
+    //     child: _child,
+    //   ),
+    // );
   }
 }
 
@@ -63,10 +64,7 @@ class AppNavigation extends StatefulWidget {
 
 class _AppNavigationState extends State<AppNavigation>
     with TickerProviderStateMixin<AppNavigation> {
-  int _currentIndex = 0;
-  List<NavigationView> _views;
-
-  static final List<PopupMenuItem> _items = <PopupMenuItem>[
+  static final List<PopupMenuItem> _menuItems = <PopupMenuItem>[
     PopupMenuItem(
       value: donateUrl,
       child: Text('Donate'),
@@ -79,6 +77,10 @@ class _AppNavigationState extends State<AppNavigation>
     //   child: Text('Info'),
     // ),
   ];
+
+  int _currentIndex = 0;
+  List<NavigationView> _views;
+  List<BottomNavigationBarItem> _navigationItems;
 
   @override
   void didChangeDependencies() {
@@ -107,9 +109,10 @@ class _AppNavigationState extends State<AppNavigation>
       ),
     ];
 
-    for (NavigationView view in _views) view.controller.addListener(_rebuild);
-
+    // Set animation controller (opacity and scale) to make screen visible
     _views[_currentIndex].controller.value = 1.0;
+
+    _navigationItems = _views.map((NavigationView view) => view.item).toList();
   }
 
   @override
@@ -119,87 +122,46 @@ class _AppNavigationState extends State<AppNavigation>
     super.dispose();
   }
 
-  void _rebuild() {
-    setState(() {
-      // Rebuild in order to animate views.
-    });
-  }
-
   void _onSelected(dynamic value) => url_launcher.launch(value);
 
-  void _onTap(int index) {
+  void _onTap(int index) async {
+    // Wait for the old screen transition to complete
+    await _views[_currentIndex].controller.reverse();
+
+    // Then update the index and animate the screen
     setState(() {
-      _views[_currentIndex].controller.reverse();
       _currentIndex = index;
       _views[_currentIndex].controller.forward();
     });
   }
 
-  Stack _buildTransitionsStack() {
-    final List<FadeTransition> transitions = <FadeTransition>[];
-
-    for (NavigationView view in _views) transitions.add(view.transition());
-
-    // We want to have the newly animating (fading in) views on top.
-    transitions.sort((FadeTransition a, FadeTransition b) {
-      final Animation<double> aAnimation = a.opacity;
-      final Animation<double> bAnimation = b.opacity;
-      final double aValue = aAnimation.value;
-      final double bValue = bAnimation.value;
-      return aValue.compareTo(bValue);
-    });
-
-    return Stack(children: transitions);
-  }
-
-  BottomNavigationBar _buildBottomNavigationBar() {
-    final List<BottomNavigationBarItem> items =
-        _views.map((NavigationView view) => view.item).toList();
-
-    return BottomNavigationBar(
-      items: items,
-      currentIndex: _currentIndex,
-      onTap: _onTap,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final String title = AppLocalizations.of(context).translate('title');
+    final SliverAppBar appBar = SliverAppBar(
+      centerTitle: true,
+      title: Text(title),
+      leading: ReviewIconButton(),
+      actions: <Widget>[
+        PopupMenuButton(
+          onSelected: _onSelected,
+          itemBuilder: (BuildContext context) => _menuItems,
+        ),
+      ],
+      floating: true,
+      snap: true,
+      forceElevated: true,
+    );
+    final Widget body = _views[_currentIndex].transition();
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(title),
-        leading: ReviewIconButton(),
-        actions: <Widget>[
-          PopupMenuButton(
-            onSelected: _onSelected,
-            itemBuilder: (BuildContext context) => _items,
-          ),
-        ],
+      bottomNavigationBar: BottomNavigationBar(
+        items: _navigationItems,
+        currentIndex: _currentIndex,
+        onTap: _onTap,
       ),
-      body: Center(child: _buildTransitionsStack()),
-      bottomNavigationBar: _buildBottomNavigationBar(),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     padding: EdgeInsets.zero,
-      //     children: <Widget>[
-      //       DrawerHeader(
-      //         child: Text(title),
-      //         decoration: BoxDecoration(color: Colors.pinkAccent),
-      //       ),
-      //       ListTile(
-      //         title: Text('Item'),
-      //         onTap: () {
-      //           // Update the state of the app
-      //           // ...
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
       floatingActionButton: EventFloatingActionButton(),
+      body: CustomScrollView(slivers: <Widget>[appBar, body]),
     );
   }
 }

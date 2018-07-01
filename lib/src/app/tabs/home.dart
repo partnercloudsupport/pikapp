@@ -57,110 +57,114 @@ class HomeTab extends StatelessWidget {
     final ButtonThemeData buttonTheme =
         ButtonTheme.of(context).copyWith(minWidth: 36.0);
 
-    return ListView(
-      padding: EdgeInsets.only(bottom: 160.0),
-      children: <Widget>[
-        Padding(
-          padding: padding,
-          child: Text(
-            'Ciao!',
-            style: header,
+    // return ListView(
+    //   padding: EdgeInsets.only(bottom: 160.0),
+    //   children: <Widget>[
+    return SliverList(
+      delegate: SliverChildListDelegate(
+        <Widget>[
+          Padding(
+            padding: padding,
+            child: Text(
+              'Ciao!',
+              style: header,
+            ),
           ),
-        ),
-        Image.asset('lib/assets/home_1.jpg', fit: BoxFit.fitWidth),
-        Padding(
-          padding: padding,
-          child: Text(
-            "Mi chiamo Altea, sono del '95, e sono di Firenze. Sono una studentessa universitaria e nel tempo libero, tra una partita a Minecraft e a LoL, creo contenuti sul web.",
-            style: body,
+          Image.asset('lib/assets/home_1.jpg', fit: BoxFit.fitWidth),
+          Padding(
+            padding: padding,
+            child: Text(
+              "Mi chiamo Altea, sono del '95, e sono di Firenze. Sono una studentessa universitaria e nel tempo libero, tra una partita a Minecraft e a LoL, creo contenuti sul web.",
+              style: body,
+            ),
           ),
-        ),
-        Image.asset('lib/assets/pokeball.png', height: 80.0),
-        Padding(
-          padding: padding,
-          child: Text(
-            'Il mio canale, Pikatea, nasce nel maggio 2014. Il nome del canale viene da "Pikachu" ed il mio nome, "Altea", appunto. Cercavo un termine breve, dalla semplice memorizzazione, che facesse subito pensare a quella che era la mia più grande passione: i Pokèmon! E nonostante la figura di Pikachu non mi avesse mai entusiasmato più di tanto, decisi comunque di farlo diventare parte del mio nickname.',
-            style: body,
+          Image.asset('lib/assets/pokeball.png', height: 80.0),
+          Padding(
+            padding: padding,
+            child: Text(
+              'Il mio canale, Pikatea, nasce nel maggio 2014. Il nome del canale viene da "Pikachu" ed il mio nome, "Altea", appunto. Cercavo un termine breve, dalla semplice memorizzazione, che facesse subito pensare a quella che era la mia più grande passione: i Pokèmon! E nonostante la figura di Pikachu non mi avesse mai entusiasmato più di tanto, decisi comunque di farlo diventare parte del mio nickname.',
+              style: body,
+            ),
           ),
-        ),
-        Image.asset('lib/assets/home_2.jpg', fit: BoxFit.fitWidth),
-        Padding(
-          padding: padding,
-          child: Text(
-            'Questa è la mia app in cui potrai trovare tutti i video del mio canale YouTube e i prodotti che pubblico su Etsy.',
-            style: body,
+          Image.asset('lib/assets/home_2.jpg', fit: BoxFit.fitWidth),
+          Padding(
+            padding: padding,
+            child: Text(
+              'Questa è la mia app in cui potrai trovare tutti i video del mio canale YouTube e i prodotti che pubblico su Etsy.',
+              style: body,
+            ),
           ),
-        ),
-        Padding(
-          padding: padding,
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Puoi trovarmi su questi social:',
-                style: footer,
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: ButtonTheme.fromButtonThemeData(
-                  data: buttonTheme,
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    spacing: 16.0,
-                    runSpacing: 16.0,
-                    children: <Widget>[
-                      SocialIconButton(
-                        FontAwesomeIcons.facebookF,
-                        onPressed: _goToFacebook,
-                        color: Color.fromRGBO(65, 89, 147, 1.0),
-                      ),
-                      SocialIconButton(
-                        FontAwesomeIcons.facebookMessenger,
-                        onPressed: _goToMessenger,
-                        color: Color.fromRGBO(0, 132, 255, 1.0),
-                      ),
-                      SocialIconButton(
-                        FontAwesomeIcons.instagram,
-                        onPressed: _goToInstagram,
-                        color: Color.fromRGBO(205, 72, 107, 1.0),
-                      ),
-                      SocialIconButton(
-                        FontAwesomeIcons.twitter,
-                        onPressed: _goToTwitter,
-                        color: Color.fromRGBO(0, 172, 237, 1.0),
-                      ),
-                      SocialIconButton(
-                        FontAwesomeIcons.youtube,
-                        onPressed: _goToYoutube,
-                        color: Color.fromRGBO(230, 33, 23, 1.0),
-                      ),
-                      SocialIconButton(
-                        FontAwesomeIcons.telegramPlane,
-                        onPressed: _goToTelegram,
-                        color: Color.fromRGBO(0, 136, 204, 1.0),
-                      ),
-                      SocialIconButton(
-                        FontAwesomeIcons.pinterestP,
-                        onPressed: _goToPinterest,
-                        color: Color.fromRGBO(189, 8, 28, 1.0),
-                      ),
-                      SocialIconButton(
-                        FontAwesomeIcons.twitch,
-                        onPressed: _goToTwitch,
-                        color: Color.fromRGBO(75, 54, 124, 1.0),
-                      ),
-                      // SocialIconButton(
-                      //   FontAwesomeIcons.snapchatGhost,
-                      //   color: Color.fromRGBO(255, 252, 0, 1.0),
-                      // ),
-                    ],
+          Padding(
+            padding: padding,
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Puoi trovarmi su questi social:',
+                  style: footer,
+                  textAlign: TextAlign.center,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: ButtonTheme.fromButtonThemeData(
+                    data: buttonTheme,
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 16.0,
+                      runSpacing: 16.0,
+                      children: <Widget>[
+                        SocialIconButton(
+                          FontAwesomeIcons.facebookF,
+                          onPressed: _goToFacebook,
+                          color: Color.fromRGBO(65, 89, 147, 1.0),
+                        ),
+                        SocialIconButton(
+                          FontAwesomeIcons.facebookMessenger,
+                          onPressed: _goToMessenger,
+                          color: Color.fromRGBO(0, 132, 255, 1.0),
+                        ),
+                        SocialIconButton(
+                          FontAwesomeIcons.instagram,
+                          onPressed: _goToInstagram,
+                          color: Color.fromRGBO(205, 72, 107, 1.0),
+                        ),
+                        SocialIconButton(
+                          FontAwesomeIcons.twitter,
+                          onPressed: _goToTwitter,
+                          color: Color.fromRGBO(0, 172, 237, 1.0),
+                        ),
+                        SocialIconButton(
+                          FontAwesomeIcons.youtube,
+                          onPressed: _goToYoutube,
+                          color: Color.fromRGBO(230, 33, 23, 1.0),
+                        ),
+                        SocialIconButton(
+                          FontAwesomeIcons.telegramPlane,
+                          onPressed: _goToTelegram,
+                          color: Color.fromRGBO(0, 136, 204, 1.0),
+                        ),
+                        SocialIconButton(
+                          FontAwesomeIcons.pinterestP,
+                          onPressed: _goToPinterest,
+                          color: Color.fromRGBO(189, 8, 28, 1.0),
+                        ),
+                        SocialIconButton(
+                          FontAwesomeIcons.twitch,
+                          onPressed: _goToTwitch,
+                          color: Color.fromRGBO(75, 54, 124, 1.0),
+                        ),
+                        // SocialIconButton(
+                        //   FontAwesomeIcons.snapchatGhost,
+                        //   color: Color.fromRGBO(255, 252, 0, 1.0),
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

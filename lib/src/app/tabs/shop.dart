@@ -11,7 +11,7 @@ class ShopTab extends StatelessWidget {
     final String text =
         AppLocalizations.of(context).translate('text_coming_soon');
 
-    return Center(
+    return SliverFillRemaining(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

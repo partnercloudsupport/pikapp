@@ -27,12 +27,18 @@ class VideoList extends StatelessWidget {
 
   final List items;
 
+  Widget _buildItem(BuildContext context, int index) =>
+      VideoCard.fromData(items[index]);
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: kMaterialListPadding,
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) =>
-            VideoCard.fromData(items[index]));
+    return SliverList(
+      delegate:
+          SliverChildBuilderDelegate(_buildItem, childCount: items.length),
+    );
+    // return ListView.builder(
+    //     padding: kMaterialListPadding,
+    //     itemCount: items.length,
+    //     itemBuilder: (BuildContext context, int index) => VideoCard.fromData(items[index]));
   }
 }
