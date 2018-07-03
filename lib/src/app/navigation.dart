@@ -9,12 +9,13 @@ import 'tabs/channel.dart';
 import 'tabs/home.dart';
 import 'tabs/shop.dart';
 
-class NavigationView {
-  NavigationView({
-    @required Widget child,
+class NavigationItem extends StatelessWidget {
+  NavigationItem({
+    Key key,
     @required Icon icon,
     @required String title,
     @required TickerProvider vsync,
+    @required Widget child,
   })  : _child = child,
         controller = AnimationController(
           duration: kThemeAnimationDuration,
@@ -23,33 +24,25 @@ class NavigationView {
         item = BottomNavigationBarItem(
           icon: icon,
           title: Text(title),
-        ) {
-    final Interval interval = Interval(0.5, 1.0, curve: Curves.fastOutSlowIn);
+        ),
+        super(key: key);
 
-    _opacity = CurvedAnimation(
-      parent: controller,
-      curve: interval,
-    );
+  final Animatable<double> _opacity = Tween(begin: 0.015, end: 1.0)
+      .chain(CurveTween(curve: Curves.fastOutSlowIn));
 
-    _scale = Tween(begin: 0.97, end: 1.0).animate(CurvedAnimation(
-      parent: controller,
-      curve: interval,
-      reverseCurve: Threshold(0.0),
-    ));
-  }
+  final Animatable<double> _scale = Tween(begin: 0.97, end: 1.0)
+      .chain(CurveTween(curve: Curves.fastOutSlowIn));
 
   final Widget _child;
   final AnimationController controller;
   final BottomNavigationBarItem item;
 
-  CurvedAnimation _opacity;
-  Animation<double> _scale;
-
-  FadeTransition transition() {
+  @override
+  Widget build(BuildContext context) {
     return FadeTransition(
-      opacity: _opacity,
+      opacity: _opacity.animate(controller),
       child: ScaleTransition(
-        scale: _scale,
+        scale: _scale.animate(controller),
         child: _child,
       ),
     );
@@ -63,10 +56,7 @@ class AppNavigation extends StatefulWidget {
 
 class _AppNavigationState extends State<AppNavigation>
     with TickerProviderStateMixin<AppNavigation> {
-  int _currentIndex = 0;
-  List<NavigationView> _views;
-
-  static final List<PopupMenuItem> _items = <PopupMenuItem>[
+  static final List<PopupMenuItem> _menuItems = <PopupMenuItem>[
     PopupMenuItem(
       value: donateUrl,
       child: Text('Donate'),
@@ -80,26 +70,33 @@ class _AppNavigationState extends State<AppNavigation>
     // ),
   ];
 
+  int _currentIndex = 0;
+  List<NavigationItem> _bodyItems;
+  List<BottomNavigationBarItem> _navigationItems;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     final AppLocalizations localizations = AppLocalizations.of(context);
 
-    _views = <NavigationView>[
-      NavigationView(
+    _bodyItems = <NavigationItem>[
+      NavigationItem(
+        key: PageStorageKey<String>('home'),
         child: HomeTab(),
         icon: Icon(Icons.home),
         title: localizations.translate('home_tab_title'),
         vsync: this,
       ),
-      NavigationView(
+      NavigationItem(
+        key: PageStorageKey<String>('channel'),
         child: ChannelTab(),
         icon: Icon(Icons.play_circle_filled),
         title: localizations.translate('channel_tab_title'),
         vsync: this,
       ),
-      NavigationView(
+      NavigationItem(
+        key: PageStorageKey<String>('shop'),
         child: ShopTab(),
         icon: Icon(Icons.store),
         title: localizations.translate('shop_tab_title'),
@@ -107,98 +104,61 @@ class _AppNavigationState extends State<AppNavigation>
       ),
     ];
 
-    for (NavigationView view in _views) view.controller.addListener(_rebuild);
+    // Set animation controller (opacity and scale) to make screen visible
+    _bodyItems[_currentIndex].controller.value = 1.0;
 
-    _views[_currentIndex].controller.value = 1.0;
+    _navigationItems =
+        _bodyItems.map((NavigationItem item) => item.item).toList();
   }
 
   @override
   void dispose() {
-    for (NavigationView view in _views) view.controller.dispose();
+    for (NavigationItem item in _bodyItems) item.controller.dispose();
 
     super.dispose();
   }
 
-  void _rebuild() {
-    setState(() {
-      // Rebuild in order to animate views.
-    });
-  }
-
   void _onSelected(dynamic value) => url_launcher.launch(value);
 
-  void _onTap(int index) {
+  void _onTap(int index) async {
+    // Wait for the old screen transition to complete
+    await _bodyItems[_currentIndex].controller.reverse();
+
+    // Then update the index and animate the screen
     setState(() {
-      _views[_currentIndex].controller.reverse();
       _currentIndex = index;
-      _views[_currentIndex].controller.forward();
+      _bodyItems[_currentIndex].controller.forward();
     });
-  }
-
-  Stack _buildTransitionsStack() {
-    final List<FadeTransition> transitions = <FadeTransition>[];
-
-    for (NavigationView view in _views) transitions.add(view.transition());
-
-    // We want to have the newly animating (fading in) views on top.
-    transitions.sort((FadeTransition a, FadeTransition b) {
-      final Animation<double> aAnimation = a.opacity;
-      final Animation<double> bAnimation = b.opacity;
-      final double aValue = aAnimation.value;
-      final double bValue = bAnimation.value;
-      return aValue.compareTo(bValue);
-    });
-
-    return Stack(children: transitions);
-  }
-
-  BottomNavigationBar _buildBottomNavigationBar() {
-    final List<BottomNavigationBarItem> items =
-        _views.map((NavigationView view) => view.item).toList();
-
-    return BottomNavigationBar(
-      items: items,
-      currentIndex: _currentIndex,
-      onTap: _onTap,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     final String title = AppLocalizations.of(context).translate('title');
 
+    final AppBar appBar = AppBar(
+      centerTitle: true,
+      title: Text(title),
+      leading: ReviewIconButton(),
+      actions: <Widget>[
+        PopupMenuButton(
+          onSelected: _onSelected,
+          itemBuilder: (BuildContext context) => _menuItems,
+        ),
+      ],
+    );
+
+    final Widget body = _bodyItems[_currentIndex];
+
+    final BottomNavigationBar navigationBar = BottomNavigationBar(
+      currentIndex: _currentIndex,
+      items: _navigationItems,
+      onTap: _onTap,
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(title),
-        leading: ReviewIconButton(),
-        actions: <Widget>[
-          PopupMenuButton(
-            onSelected: _onSelected,
-            itemBuilder: (BuildContext context) => _items,
-          ),
-        ],
-      ),
-      body: Center(child: _buildTransitionsStack()),
-      bottomNavigationBar: _buildBottomNavigationBar(),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     padding: EdgeInsets.zero,
-      //     children: <Widget>[
-      //       DrawerHeader(
-      //         child: Text(title),
-      //         decoration: BoxDecoration(color: Colors.pinkAccent),
-      //       ),
-      //       ListTile(
-      //         title: Text('Item'),
-      //         onTap: () {
-      //           // Update the state of the app
-      //           // ...
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
+      appBar: appBar,
+      body: body,
+      bottomNavigationBar: navigationBar,
       floatingActionButton: EventFloatingActionButton(),
     );
   }

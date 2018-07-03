@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:async/async.dart';
 import 'package:http/http.dart';
 
 import 'package:pikapp/src/config/secrets.dart' show youtubeApiKey;
@@ -12,11 +11,11 @@ final Map<String, String> _baseParams = <String, String>{
   'part': 'snippet',
 };
 
-class YoutubeApi {
-  static final _dataCache = AsyncCache(Duration(hours: 1));
+final Uri _baseUrl =
+    Uri.https('www.googleapis.com', '/youtube/v3/search', _baseParams);
 
-  static final Uri baseUrl =
-      Uri.https('www.googleapis.com', '/youtube/v3/search', _baseParams);
+class YoutubeApi {
+  static Map<String, dynamic> data = {};
 
   static Future<Map<String, dynamic>> fetchData(
       {int maxResults = 50, String order = 'date'}) async {
@@ -25,11 +24,11 @@ class YoutubeApi {
       'order': order,
       'type': 'video',
     }..addAll(_baseParams);
-    Uri url = baseUrl.replace(queryParameters: params);
 
+    Uri url = _baseUrl.replace(queryParameters: params);
     Response response = await get(url);
-    return json.decode(response.body);
-  }
+    data = json.decode(response.body);
 
-  static Future fetchCachedData() => _dataCache.fetch(fetchData);
+    return data;
+  }
 }

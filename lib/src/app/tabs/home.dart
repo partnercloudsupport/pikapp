@@ -31,7 +31,15 @@ class SocialIconButton extends StatelessWidget {
   }
 }
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
+  @override
+  _HomeTabState createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  static final GlobalKey<_HomeTabState> _homeTabKey =
+      GlobalKey<_HomeTabState>();
+
   void _goTo(url) => url_launcher.launch(url);
 
   void _goToFacebook() => _goTo(socialFacebookUrl);
@@ -58,6 +66,7 @@ class HomeTab extends StatelessWidget {
         ButtonTheme.of(context).copyWith(minWidth: 36.0);
 
     return ListView(
+      key: _homeTabKey,
       padding: EdgeInsets.only(bottom: 160.0),
       children: <Widget>[
         Padding(
