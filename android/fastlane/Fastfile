@@ -5,10 +5,16 @@ default_platform(:android)
 
 platform :android do
 
-  desc "Deploy (build and upload) a beta version to the Google Play"
+  desc "Push a new beta build to the Play Store"
   lane :beta do
     build
     upload(beta: true)
+  end
+
+  desc "Push a new release build to the Play Store"
+  lane :release do
+    build
+    upload
   end
 
   desc "Build a new version of the app"

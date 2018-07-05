@@ -5,22 +5,24 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class VideoCard extends StatelessWidget {
   VideoCard({
-    @required String videoId,
+    @required String this.videoId,
     @required String this.thumbnailUrl,
     @required String this.title,
     @required String this.description,
-  }) : videoUrl = 'https://youtu.be/$videoId';
+  });
 
   VideoCard.fromData(Map<String, dynamic> data)
-      : videoUrl = 'https://youtu.be/${data['id']['videoId']}',
+      : videoId = data['id']['videoId'],
         thumbnailUrl = data['snippet']['thumbnails']['high']['url'],
         title = data['snippet']['title'],
         description = data['snippet']['description'];
 
-  final String videoUrl;
+  final String videoId;
   final String thumbnailUrl;
   final String title;
   final String description;
+
+  String get videoUrl => 'https://youtu.be/$videoId';
 
   void _watch() => url_launcher.launch(videoUrl);
 

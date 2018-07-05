@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
-import '../../lib/youtube.dart';
+import '../../lib/videos.dart';
 import '../components/video_list.dart';
 import '../locale/localizations.dart';
 
@@ -18,7 +18,8 @@ class _ChannelTabState extends State<ChannelTab>
       GlobalKey<RefreshIndicatorState>();
 
   SnackBar get _snackBar {
-    AppLocalizations localizations = AppLocalizations.of(context);
+    final AppLocalizations localizations = AppLocalizations.of(context);
+
     return SnackBar(
       duration: Duration(seconds: 10),
       content: Text(localizations.translate('text_something_wrong')),
@@ -29,26 +30,62 @@ class _ChannelTabState extends State<ChannelTab>
     );
   }
 
-  Map<String, dynamic> _data = YoutubeApi.data;
+  Map<String, dynamic> _data = VideosApi.data;
+  bool _isError = false;
+  bool _isRefresh = false;
+
+  void _onError() {
+    setState(() {
+      _isError = true;
+      _isRefresh = false;
+    });
+
+    ScaffoldState scaffold = Scaffold.of(context);
+    scaffold.removeCurrentSnackBar();
+    scaffold.showSnackBar(_snackBar);
+  }
 
   Future<Null> _onRefresh() async {
+    setState(() {
+      _isRefresh = true;
+    });
+
     try {
-      Map<String, dynamic> data = await YoutubeApi.fetchData();
+      Map<String, dynamic> data =
+          await VideosApi.fetchData().timeout(Duration(seconds: 5));
 
       setState(() {
         _data = data;
+        _isError = false;
       });
+
+      Scaffold.of(context).removeCurrentSnackBar();
     } catch (error) {
-      Scaffold.of(context).showSnackBar(_snackBar);
+      _onError();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    List items = _data.containsKey('items') ? _data['items'] : [];
+    final AppLocalizations localizations = AppLocalizations.of(context);
+    final ThemeData themeData = Theme.of(context);
+
+    final List items = _data.containsKey('items') ? _data['items'] : [];
+    final Widget child = _isError
+        ? Center(
+            child: RaisedButton.icon(
+              color: themeData.accentColor,
+              textColor: themeData.accentIconTheme.color,
+              icon: Icon(Icons.refresh),
+              label: Text(localizations.translate('text_retry').toUpperCase()),
+              onPressed:
+                  _isRefresh ? null : _refreshIndicatorKey.currentState?.show,
+            ),
+          )
+        : VideoList(items);
 
     return RefreshIndicator(
-      child: VideoList(items),
+      child: child,
       key: _refreshIndicatorKey,
       onRefresh: _onRefresh,
     );

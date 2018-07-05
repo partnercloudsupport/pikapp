@@ -9,33 +9,37 @@ import 'tabs/channel.dart';
 import 'tabs/home.dart';
 import 'tabs/shop.dart';
 
-class NavigationItem extends StatelessWidget {
-  NavigationItem({
-    Key key,
+class TabItem extends StatelessWidget {
+  TabItem({
+    @required Widget child,
     @required Icon icon,
     @required String title,
     @required TickerProvider vsync,
-    @required Widget child,
+    Key key,
   })  : _child = child,
         controller = AnimationController(
           duration: kThemeAnimationDuration,
           vsync: vsync,
         ),
-        item = BottomNavigationBarItem(
+        navigationItem = BottomNavigationBarItem(
           icon: icon,
           title: Text(title),
         ),
         super(key: key);
 
-  final Animatable<double> _opacity = Tween(begin: 0.015, end: 1.0)
-      .chain(CurveTween(curve: Curves.fastOutSlowIn));
+  static final _curve = Curves.fastOutSlowIn;
+  static final _curveTween = CurveTween(curve: _curve);
 
-  final Animatable<double> _scale = Tween(begin: 0.97, end: 1.0)
-      .chain(CurveTween(curve: Curves.fastOutSlowIn));
+  final Animatable<double> _opacity =
+      Tween(begin: 0.015, end: 1.0).chain(_curveTween);
+
+  final Animatable<double> _scale =
+      Tween(begin: 0.97, end: 1.0).chain(_curveTween);
 
   final Widget _child;
+
   final AnimationController controller;
-  final BottomNavigationBarItem item;
+  final BottomNavigationBarItem navigationItem;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +75,7 @@ class _AppNavigationState extends State<AppNavigation>
   ];
 
   int _currentIndex = 0;
-  List<NavigationItem> _bodyItems;
+  List<TabItem> _bodyItems;
   List<BottomNavigationBarItem> _navigationItems;
 
   @override
@@ -80,27 +84,27 @@ class _AppNavigationState extends State<AppNavigation>
 
     final AppLocalizations localizations = AppLocalizations.of(context);
 
-    _bodyItems = <NavigationItem>[
-      NavigationItem(
-        key: PageStorageKey<String>('home'),
+    _bodyItems = <TabItem>[
+      TabItem(
         child: HomeTab(),
         icon: Icon(Icons.home),
         title: localizations.translate('home_tab_title'),
         vsync: this,
+        key: PageStorageKey<String>('home'),
       ),
-      NavigationItem(
-        key: PageStorageKey<String>('channel'),
+      TabItem(
         child: ChannelTab(),
         icon: Icon(Icons.play_circle_filled),
         title: localizations.translate('channel_tab_title'),
         vsync: this,
+        key: PageStorageKey<String>('channel'),
       ),
-      NavigationItem(
-        key: PageStorageKey<String>('shop'),
+      TabItem(
         child: ShopTab(),
         icon: Icon(Icons.store),
         title: localizations.translate('shop_tab_title'),
         vsync: this,
+        key: PageStorageKey<String>('shop'),
       ),
     ];
 
@@ -108,12 +112,12 @@ class _AppNavigationState extends State<AppNavigation>
     _bodyItems[_currentIndex].controller.value = 1.0;
 
     _navigationItems =
-        _bodyItems.map((NavigationItem item) => item.item).toList();
+        _bodyItems.map((TabItem item) => item.navigationItem).toList();
   }
 
   @override
   void dispose() {
-    for (NavigationItem item in _bodyItems) item.controller.dispose();
+    for (TabItem item in _bodyItems) item.controller.dispose();
 
     super.dispose();
   }
