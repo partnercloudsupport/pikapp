@@ -1,22 +1,24 @@
+ENV["SUPPLY_APK"] = "../build/app/outputs/apk/release/app-release.apk"
+ENV["SUPPLY_JSON_KEY"] = "/Users/lrnz09/Development/Google_Play_Android_Developer-e96c8acff6e0.json"
+
 default_platform(:android)
 
 platform :android do
 
-  desc "Deploy (build and upload) a new version to the Google Play"
-  lane :deploy do
+  desc "Deploy (build and upload) a beta version to the Google Play"
+  lane :beta do
     build
     upload(beta: true)
-    finish
   end
 
   desc "Build a new version of the app"
   lane :build do
     # ensure_git_status_clean(show_uncommitted_changes: true)
 
-    Dir.chdir('../') {
+    Dir.chdir("../../") do
       sh("flutter", "analyze")
       sh("flutter", "build", "apk")
-    }
+    end
   end
 
   desc "Upload a new build to the Google Play"
@@ -26,11 +28,6 @@ platform :android do
     else
       supply
     end
-  end
-
-  desc "Notify the new built version"
-  lane :finish do
-    notification(subtitle: "PikApp", message: "Build uploaded!")
   end
 
 end

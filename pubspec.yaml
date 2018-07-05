@@ -1,6 +1,6 @@
 name: pikapp
 description: Pikatea\'s app!
-version: 0.1.7+7
+version: 0.2.0+20
 
 dependencies:
   flutter:

@@ -42,4 +42,8 @@ Icon?
 
 Pods/
 
+*.mobileprovision
+*.cer
+Runner.ipa
+Runner.app*.zip
 Runner/GoogleService-Info.plist
