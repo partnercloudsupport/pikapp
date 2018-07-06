@@ -37,9 +37,6 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  static final GlobalKey<_HomeTabState> _homeTabKey =
-      GlobalKey<_HomeTabState>();
-
   void _goTo(url) => url_launcher.launch(url);
 
   void _goToFacebook() => _goTo(socialFacebookUrl);
@@ -66,7 +63,6 @@ class _HomeTabState extends State<HomeTab> {
         ButtonTheme.of(context).copyWith(minWidth: 36.0);
 
     return ListView(
-      key: _homeTabKey,
       padding: EdgeInsets.only(bottom: 160.0),
       children: <Widget>[
         Padding(

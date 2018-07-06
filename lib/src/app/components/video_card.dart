@@ -30,8 +30,10 @@ class VideoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      padding: EdgeInsets.all(4.0),
       child: Card(
         child: InkWell(
           onTap: _watch,
@@ -54,13 +56,14 @@ class VideoCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       title,
-                      style: TextStyle(fontSize: 24.0),
+                      style: TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 16.0),
                       child: Text(
                         description,
-                        style: TextStyle(fontSize: 14.0),
+                        style: TextStyle(color: Colors.black87, fontSize: 12.0),
                       ),
                     ),
                   ],
@@ -70,7 +73,8 @@ class VideoCard extends StatelessWidget {
                 child: ButtonBar(
                   children: <Widget>[
                     IconButton(
-                      icon: Icon(Icons.play_arrow),
+                      color: themeData.accentColor,
+                      icon: Icon(Icons.play_circle_filled),
                       onPressed: _watch,
                     ),
                     IconButton(

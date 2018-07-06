@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import '../config/constants.dart';
@@ -18,7 +19,7 @@ class TabItem extends StatelessWidget {
     Key key,
   })  : _child = child,
         controller = AnimationController(
-          duration: kThemeAnimationDuration,
+          duration: Duration(milliseconds: 150),
           vsync: vsync,
         ),
         navigationItem = BottomNavigationBarItem(
@@ -28,13 +29,12 @@ class TabItem extends StatelessWidget {
         super(key: key);
 
   static final _curve = Curves.fastOutSlowIn;
-  static final _curveTween = CurveTween(curve: _curve);
+  static final _reverseCurve = Threshold(0.0);
 
   final Animatable<double> _opacity =
-      Tween(begin: 0.015, end: 1.0).chain(_curveTween);
+      Tween(begin: 0.015, end: 1.0).chain(CurveTween(curve: _curve));
 
-  final Animatable<double> _scale =
-      Tween(begin: 0.97, end: 1.0).chain(_curveTween);
+  final Animatable<double> _scale = Tween(begin: 0.97, end: 1.0);
 
   final Widget _child;
 
@@ -46,7 +46,11 @@ class TabItem extends StatelessWidget {
     return FadeTransition(
       opacity: _opacity.animate(controller),
       child: ScaleTransition(
-        scale: _scale.animate(controller),
+        scale: _scale.animate(CurvedAnimation(
+          parent: controller,
+          curve: _curve,
+          reverseCurve: _reverseCurve,
+        )),
         child: _child,
       ),
     );
@@ -94,7 +98,7 @@ class _AppNavigationState extends State<AppNavigation>
       ),
       TabItem(
         child: ChannelTab(),
-        icon: Icon(Icons.play_circle_filled),
+        icon: Icon(FontAwesomeIcons.youtube),
         title: localizations.translate('channel_tab_title'),
         vsync: this,
         key: PageStorageKey<String>('channel'),
