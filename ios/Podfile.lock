@@ -82,8 +82,6 @@ PODS:
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
   - Flutter (1.0.0)
-  - flutter_youtube (0.0.1):
-    - Flutter
   - GoogleToolboxForMac/Defines (2.1.4)
   - GoogleToolboxForMac/Logger (2.1.4):
     - GoogleToolboxForMac/Defines (= 2.1.4)
@@ -117,8 +115,12 @@ PODS:
   - nanopb/encode (0.3.8)
   - package_info (0.0.1):
     - Flutter
+  - path_provider (0.0.1):
+    - Flutter
   - Protobuf (3.5.0)
   - share (0.0.1):
+    - Flutter
+  - shared_preferences (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
     - Flutter
@@ -131,9 +133,10 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
-  - flutter_youtube (from `.symlinks/plugins/flutter_youtube/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - share (from `.symlinks/plugins/share/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 SPEC REPOS:
@@ -173,12 +176,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
-  flutter_youtube:
-    :path: ".symlinks/plugins/flutter_youtube/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
 
@@ -200,7 +205,6 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
   FirebaseMessaging: ec6fde5a77824c6da0218f9ca220feb251aa17d5
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  flutter_youtube: 729870920c0074fc2d0280e652aca046ac09ef89
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   gRPC: 9362451032695e2dfb7bafcd3740e3a27939e4ff
   gRPC-Core: 9696b220565b283e021cf2722d473a4a74b7622a
@@ -210,8 +214,10 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   package_info: d7c98b64f60add4c2908b9d94d82a45d3c8827ad
+  path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   share: 8d04605548e55f7ce4ebb7b3e933f3c85028c9cf
+  shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
   url_launcher: 92b89c1029a0373879933c21642958c874539095
 
 PODFILE CHECKSUM: b1dbb310550754247ec3ece046f31ffedebb298d

@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class VideoCard extends StatelessWidget {
@@ -42,9 +42,8 @@ class VideoCard extends StatelessWidget {
             children: <Widget>[
               AspectRatio(
                 aspectRatio: 16 / 9,
-                child: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: thumbnailUrl,
+                child: CachedNetworkImage(
+                  imageUrl: thumbnailUrl,
                   fit: BoxFit.fitWidth,
                   fadeOutDuration: Duration(milliseconds: 0),
                   fadeInDuration: Duration(milliseconds: 150),

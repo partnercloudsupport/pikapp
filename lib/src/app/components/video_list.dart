@@ -1,38 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'video_card.dart';
-
-// class _ListError extends StatefulWidget {
-//   @override
-//   _ListErrorState createState() => _ListErrorState();
-// }
-
-// class _ListErrorState extends State<_ListError>
-//     with AfterLayoutMixin<_ListError> {
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final ThemeData theme = Theme.of(context);
-//     return Center(
-//       child: Icon(
-//         Icons.mood_bad,
-//         color: theme.textTheme.caption.color,
-//         size: 48.0,
-//       ),
-//     );
-//   }
 
 class VideoList extends StatelessWidget {
   VideoList(this.items);
 
   final List items;
 
+  Widget _buildItem(BuildContext context, int index) =>
+      VideoCard.fromData(items[index]);
+
+  Widget _buildGrid(BuildContext context, Orientation orientation) {
+    // Create a grid with 1 column in portrait mode, or 3 columns in landscape mode.
+    int crossAxisCount = orientation == Orientation.portrait ? 1 : 3;
+
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: crossAxisCount,
+      itemCount: items.length,
+      itemBuilder: _buildItem,
+      padding: EdgeInsets.all(8.0),
+      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+      mainAxisSpacing: 2.0,
+      crossAxisSpacing: 2.0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: kMaterialListPadding,
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) =>
-            VideoCard.fromData(items[index]));
+    return OrientationBuilder(builder: _buildGrid);
   }
 }

@@ -129,6 +129,8 @@ class _AppNavigationState extends State<AppNavigation>
   void _onSelected(dynamic value) => url_launcher.launch(value);
 
   void _onTap(int index) async {
+    if (index == _currentIndex) return;
+
     // Wait for the old screen transition to complete
     await _bodyItems[_currentIndex].controller.reverse();
 

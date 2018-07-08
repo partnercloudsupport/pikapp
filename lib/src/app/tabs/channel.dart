@@ -21,7 +21,7 @@ class _ChannelTabState extends State<ChannelTab>
     final AppLocalizations localizations = AppLocalizations.of(context);
 
     return SnackBar(
-      duration: Duration(seconds: 10),
+      duration: Duration(seconds: 5),
       content: Text(localizations.translate('text_something_wrong')),
       action: SnackBarAction(
         label: localizations.translate('text_retry').toUpperCase(),

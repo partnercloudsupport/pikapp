@@ -1,7 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class _ShopItem extends StatelessWidget {
   _ShopItem({
@@ -22,31 +22,27 @@ class _ShopItem extends StatelessWidget {
         children: <Widget>[
           AspectRatio(
             aspectRatio: 1.0,
-            child: FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image: imageUrl,
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
               fit: BoxFit.fitWidth,
               fadeOutDuration: Duration(milliseconds: 0),
               fadeInDuration: Duration(milliseconds: 150),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  title ?? '',
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    subtitle ?? '',
-                    style: TextStyle(color: Colors.black87, fontSize: 12.0),
-                  ),
-                ),
-              ],
+          ExpansionTile(
+            title: Text(
+              title ?? '',
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Text(
+                  subtitle ?? '',
+                  style: TextStyle(color: Colors.black87, fontSize: 12.0),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -61,22 +57,26 @@ class ShopTab extends StatelessWidget {
 
     final int documentsCount = snapshot.data.documents.length;
 
-    return StaggeredGridView.countBuilder(
-      crossAxisCount: 2,
-      itemCount: documentsCount,
-      itemBuilder: (BuildContext context, int index) {
-        final DocumentSnapshot document = snapshot.data.documents[index];
-        return _ShopItem(
-          title: document['title'],
-          subtitle: document['subtitle'],
-          imageUrl: document['imageUrl'],
-          // key: PageStorageKey(document),
+    return OrientationBuilder(
+      builder: (BuildContext context, Orientation orientation) {
+        return StaggeredGridView.countBuilder(
+          // Create a grid with 2 columns in portrait mode, or 4 columns in landscape mode.
+          crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
+          itemCount: documentsCount,
+          itemBuilder: (BuildContext context, int index) {
+            final DocumentSnapshot document = snapshot.data.documents[index];
+            return _ShopItem(
+              title: document['title'],
+              subtitle: document['subtitle'],
+              imageUrl: document['imageUrl'],
+            );
+          },
+          padding: EdgeInsets.all(8.0),
+          staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+          mainAxisSpacing: 40.0,
+          crossAxisSpacing: 4.0,
         );
       },
-      padding: EdgeInsets.all(8.0),
-      staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-      mainAxisSpacing: 40.0,
-      crossAxisSpacing: 4.0,
     );
   }
 
