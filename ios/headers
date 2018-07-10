@@ -1,0 +1,16 @@
+HTTP/2 403 
+www-authenticate: Bearer realm="https://accounts.google.com/", error="insufficient_scope", scope="https://www.googleapis.com/auth/firebase.remoteconfig"
+vary: Origin
+vary: X-Origin
+vary: Referer
+content-type: application/json; charset=UTF-8
+content-encoding: gzip
+date: Mon, 09 Jul 2018 20:53:24 GMT
+server: ESF
+cache-control: private
+content-length: 137
+x-xss-protection: 1; mode=block
+x-frame-options: SAMEORIGIN
+x-content-type-options: nosniff
+alt-svc: quic=":443"; ma=2592000; v="43,42,41,39,35"
+

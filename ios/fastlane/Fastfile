@@ -4,7 +4,7 @@ platform :ios do
 
   desc "Push a new release build to the App Store"
   lane :release do
-    analyze
+    build
     cert
     sigh
     gym
@@ -13,11 +13,12 @@ platform :ios do
 
 
   desc "Analyze the Flutter app"
-  lane :analyze do
+  lane :build do
     # ensure_git_status_clean(show_uncommitted_changes: true)
 
     Dir.chdir("../../") do
       sh("flutter", "analyze")
+      sh("flutter", "build", "ios")
     end
   end
 

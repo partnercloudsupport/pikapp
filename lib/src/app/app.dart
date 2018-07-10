@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import '../analytics.dart';
-import '../messaging.dart';
-import 'navigation.dart';
-import 'locale/localizations.dart';
+import '../lib/firebase/analytics.dart';
+import '../lib/firebase/messaging.dart';
+import './loading.dart';
+import './locale/localizations.dart';
 
 class App extends StatelessWidget {
   App() {
@@ -31,10 +31,7 @@ class App extends StatelessWidget {
 
   static final navigatorObservers = [analyticsObserver];
 
-  static final List<Locale> supportedLocales = [
-    Locale('it'),
-    Locale('en'),
-  ];
+  static final List<Locale> supportedLocales = [Locale('it'), Locale('en')];
 
   static Locale localeResolutionCallback(
       Locale locale, Iterable<Locale> supportedLocales) {
@@ -46,14 +43,14 @@ class App extends StatelessWidget {
     return supportedLocales.first;
   }
 
-  static String onGenerateTitle(BuildContext context) =>
-      AppLocalizations.of(context).translate('title');
+  static String onGenerateTitle(BuildContext context) => 'PikApp';
+  // AppLocalizations.of(context).translate('title');
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AppNavigation(),
+      home: AppLoading(),
       localizationsDelegates: localizationsDelegates,
       localeResolutionCallback: localeResolutionCallback,
       navigatorObservers: navigatorObservers,

@@ -1,61 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
-import '../config/constants.dart';
-import 'components/buttons/review.dart';
-import 'floating_action_button.dart';
-import 'locale/localizations.dart';
-import 'tabs/channel.dart';
-import 'tabs/home.dart';
-import 'tabs/shop.dart';
-
-class TabItem extends StatelessWidget {
-  TabItem({
-    @required Widget child,
-    @required Icon icon,
-    @required String title,
-    @required TickerProvider vsync,
-    Key key,
-  })  : _child = child,
-        controller = AnimationController(
-          duration: Duration(milliseconds: 150),
-          vsync: vsync,
-        ),
-        navigationItem = BottomNavigationBarItem(
-          icon: icon,
-          title: Text(title),
-        ),
-        super(key: key);
-
-  static final _curve = Curves.fastOutSlowIn;
-  static final _reverseCurve = Threshold(0.0);
-
-  final Animatable<double> _opacity =
-      Tween(begin: 0.015, end: 1.0).chain(CurveTween(curve: _curve));
-
-  final Animatable<double> _scale = Tween(begin: 0.97, end: 1.0);
-
-  final Widget _child;
-
-  final AnimationController controller;
-  final BottomNavigationBarItem navigationItem;
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _opacity.animate(controller),
-      child: ScaleTransition(
-        scale: _scale.animate(CurvedAnimation(
-          parent: controller,
-          curve: _curve,
-          reverseCurve: _reverseCurve,
-        )),
-        child: _child,
-      ),
-    );
-  }
-}
+import './components/buttons/review.dart';
+import './fab.dart';
+import './item.dart';
+import './locale/localizations.dart';
+import './menu.dart';
+import './tabs/channel.dart';
+import './tabs/home.dart';
+import './tabs/shop.dart';
 
 class AppNavigation extends StatefulWidget {
   @override
@@ -64,22 +17,8 @@ class AppNavigation extends StatefulWidget {
 
 class _AppNavigationState extends State<AppNavigation>
     with TickerProviderStateMixin<AppNavigation> {
-  static final List<PopupMenuItem> _menuItems = <PopupMenuItem>[
-    PopupMenuItem(
-      value: donateUrl,
-      child: Text('Donate'),
-    ),
-    PopupMenuItem(
-      value: storeAndroidUrl,
-      child: Text('Send Feedback'),
-    ),
-    // PopupMenuItem(
-    //   child: Text('Info'),
-    // ),
-  ];
-
   int _currentIndex = 0;
-  List<TabItem> _bodyItems;
+  List<AppItem> _bodyItems;
   List<BottomNavigationBarItem> _navigationItems;
 
   @override
@@ -88,22 +27,22 @@ class _AppNavigationState extends State<AppNavigation>
 
     final AppLocalizations localizations = AppLocalizations.of(context);
 
-    _bodyItems = <TabItem>[
-      TabItem(
+    _bodyItems = <AppItem>[
+      AppItem(
         child: HomeTab(),
         icon: Icon(Icons.home),
         title: localizations.translate('home_tab_title'),
         vsync: this,
         key: PageStorageKey<String>('home'),
       ),
-      TabItem(
+      AppItem(
         child: ChannelTab(),
         icon: Icon(FontAwesomeIcons.youtube),
         title: localizations.translate('channel_tab_title'),
         vsync: this,
         key: PageStorageKey<String>('channel'),
       ),
-      TabItem(
+      AppItem(
         child: ShopTab(),
         icon: Icon(Icons.store),
         title: localizations.translate('shop_tab_title'),
@@ -116,17 +55,15 @@ class _AppNavigationState extends State<AppNavigation>
     _bodyItems[_currentIndex].controller.value = 1.0;
 
     _navigationItems =
-        _bodyItems.map((TabItem item) => item.navigationItem).toList();
+        _bodyItems.map((AppItem item) => item.navigationItem).toList();
   }
 
   @override
   void dispose() {
-    for (TabItem item in _bodyItems) item.controller.dispose();
+    for (AppItem item in _bodyItems) item.controller.dispose();
 
     super.dispose();
   }
-
-  void _onSelected(dynamic value) => url_launcher.launch(value);
 
   void _onTap(int index) async {
     if (index == _currentIndex) return;
@@ -149,12 +86,7 @@ class _AppNavigationState extends State<AppNavigation>
       centerTitle: true,
       title: Text(title),
       leading: ReviewIconButton(),
-      actions: <Widget>[
-        PopupMenuButton(
-          onSelected: _onSelected,
-          itemBuilder: (BuildContext context) => _menuItems,
-        ),
-      ],
+      actions: <Widget>[AppMenuButton()],
     );
 
     final Widget body = _bodyItems[_currentIndex];
@@ -169,7 +101,7 @@ class _AppNavigationState extends State<AppNavigation>
       appBar: appBar,
       body: body,
       bottomNavigationBar: navigationBar,
-      floatingActionButton: EventFloatingActionButton(),
+      floatingActionButton: AppFloatingActionButton(),
     );
   }
 }

@@ -46,7 +46,7 @@ class VideoCard extends StatelessWidget {
                   imageUrl: thumbnailUrl,
                   fit: BoxFit.fitWidth,
                   fadeOutDuration: Duration(milliseconds: 0),
-                  fadeInDuration: Duration(milliseconds: 150),
+                  fadeInDuration: kThemeAnimationDuration,
                 ),
               ),
               Padding(

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:pikapp/src/analytics.dart';
+import '../lib/firebase/analytics.dart';
+import './locale/localizations.dart';
 
-import 'locale/localizations.dart';
-
-class EventFloatingActionButton extends StatelessWidget {
+class AppFloatingActionButton extends StatelessWidget {
   void _onPressed() {
     analytics.logEvent(name: 'fab_snackbar_action');
   }
@@ -14,13 +13,10 @@ class EventFloatingActionButton extends StatelessWidget {
     final AppLocalizations localizations = AppLocalizations.of(context);
     final String tooltip = localizations.translate('fab_tooltip');
     final List<String> snackbar_content_list = [
-      localizations.translate('text_curious_person'),
-      localizations.translate('text_mystery_button'),
-      localizations.translate('text_retry_later'),
-      localizations.translate('text_surprise'),
+      localizations.translate('curious_person'),
+      localizations.translate('mystery_button'),
+      localizations.translate('fab_tooltip'),
     ];
-    final MaterialLocalizations material_localizations =
-        MaterialLocalizations.of(context);
 
     return FloatingActionButton(
       child: Icon(Icons.flash_on),
@@ -33,7 +29,7 @@ class EventFloatingActionButton extends StatelessWidget {
           duration: Duration(seconds: 5),
           content: Text(snackbar_content),
           action: SnackBarAction(
-            label: material_localizations.okButtonLabel,
+            label: MaterialLocalizations.of(context).okButtonLabel,
             onPressed: _onPressed,
           ),
         );

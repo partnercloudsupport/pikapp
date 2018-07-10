@@ -21,9 +21,9 @@ or alternatively using `brew cask install fastlane`
 fastlane ios release
 ```
 Push a new release build to the App Store
-### ios analyze
+### ios build
 ```
-fastlane ios analyze
+fastlane ios build
 ```
 Analyze the Flutter app
 

@@ -5,12 +5,13 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class _ShopItem extends StatelessWidget {
   _ShopItem({
+    @required this.id,
     @required this.title,
     @required this.subtitle,
     @required this.imageUrl,
-    Key key,
-  }) : super(key: key);
+  });
 
+  final String id;
   final String title;
   final String subtitle;
   final String imageUrl;
@@ -26,10 +27,11 @@ class _ShopItem extends StatelessWidget {
               imageUrl: imageUrl,
               fit: BoxFit.fitWidth,
               fadeOutDuration: Duration(milliseconds: 0),
-              fadeInDuration: Duration(milliseconds: 150),
+              fadeInDuration: kThemeAnimationDuration,
             ),
           ),
           ExpansionTile(
+            key: PageStorageKey<String>(id),
             title: Text(
               title ?? '',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -66,6 +68,7 @@ class ShopTab extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             final DocumentSnapshot document = snapshot.data.documents[index];
             return _ShopItem(
+              id: document.documentID,
               title: document['title'],
               subtitle: document['subtitle'],
               imageUrl: document['imageUrl'],

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
-import 'package:pikapp/src/analytics.dart';
-
+import '../../../lib/firebase/analytics.dart';
 import '../../../config/constants.dart';
 import '../../locale/localizations.dart';
 
@@ -16,8 +15,8 @@ class ReviewIconButton extends StatelessWidget {
     AppLocalizations localizations = AppLocalizations.of(context);
     String dialog_title = localizations.translate('review_dialog_title');
     String dialog_content = localizations.translate('review_dialog_content');
-    String text_later = localizations.translate('text_later').toUpperCase();
-    String text_sure = localizations.translate('text_sure').toUpperCase();
+    String text_later = localizations.translate('later').toUpperCase();
+    String text_sure = localizations.translate('sure').toUpperCase();
 
     return AlertDialog(
       title: Text(dialog_title),

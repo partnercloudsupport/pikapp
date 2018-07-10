@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import '../../config/constants.dart';
+import '../../lib/firebase/remote_config.dart';
+import '../locale/localizations.dart';
 
 class SocialIconButton extends StatelessWidget {
   final IconData icon;
@@ -50,6 +52,8 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context);
+
     final TextStyle header = TextStyle(
         fontFamily: 'Courgette', fontSize: 48.0, fontWeight: FontWeight.bold);
     final TextStyle body = TextStyle(fontSize: 24.0);
@@ -67,41 +71,24 @@ class _HomeTabState extends State<HomeTab> {
       children: <Widget>[
         Padding(
           padding: padding,
-          child: Text(
-            'Ciao!',
-            style: header,
-          ),
+          child: Text(localizations.translate('home_header'), style: header),
         ),
-        Image.asset('lib/assets/home_1.jpg', fit: BoxFit.fitWidth),
+        Image.asset('lib/resources/assets/home_1.jpg', fit: BoxFit.fitWidth),
         Padding(
           padding: padding,
-          child: Text(
-            "Mi chiamo Altea, sono del '95, e sono di Firenze. Sono una studentessa universitaria e nel tempo libero, tra una partita a Minecraft e a LoL, creo contenuti sul web.",
-            style: body,
-          ),
+          child: Text(localizations.translate('home_body'), style: body),
         ),
-        Image.asset('lib/assets/pokeball.png', height: 80.0),
+        Image.asset('lib/resources/assets/home_2.jpg', fit: BoxFit.fitWidth),
         Padding(
           padding: padding,
-          child: Text(
-            'Il mio canale, Pikatea, nasce nel maggio 2014. Il nome del canale viene da "Pikachu" ed il mio nome, "Altea", appunto. Cercavo un termine breve, dalla semplice memorizzazione, che facesse subito pensare a quella che era la mia più grande passione: i Pokèmon! E nonostante la figura di Pikachu non mi avesse mai entusiasmato più di tanto, decisi comunque di farlo diventare parte del mio nickname.',
-            style: body,
-          ),
-        ),
-        Image.asset('lib/assets/home_2.jpg', fit: BoxFit.fitWidth),
-        Padding(
-          padding: padding,
-          child: Text(
-            'Questa è la mia app in cui potrai trovare tutti i video del mio canale YouTube e i prodotti che pubblico su Etsy.',
-            style: body,
-          ),
+          child: Text(localizations.translate('home_footer'), style: body),
         ),
         Padding(
           padding: padding,
           child: Column(
             children: <Widget>[
               Text(
-                'Puoi trovarmi su questi social:',
+                localizations.translate('home_social'),
                 style: footer,
                 textAlign: TextAlign.center,
               ),

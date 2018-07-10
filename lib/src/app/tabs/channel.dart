@@ -22,9 +22,9 @@ class _ChannelTabState extends State<ChannelTab>
 
     return SnackBar(
       duration: Duration(seconds: 5),
-      content: Text(localizations.translate('text_something_wrong')),
+      content: Text(localizations.translate('something_wrong')),
       action: SnackBarAction(
-        label: localizations.translate('text_retry').toUpperCase(),
+        label: localizations.translate('retry').toUpperCase(),
         onPressed: _refreshIndicatorKey.currentState?.show,
       ),
     );
@@ -77,7 +77,7 @@ class _ChannelTabState extends State<ChannelTab>
               color: themeData.accentColor,
               textColor: themeData.accentIconTheme.color,
               icon: Icon(Icons.refresh),
-              label: Text(localizations.translate('text_retry').toUpperCase()),
+              label: Text(localizations.translate('retry').toUpperCase()),
               onPressed:
                   _isRefresh ? null : _refreshIndicatorKey.currentState?.show,
             ),
