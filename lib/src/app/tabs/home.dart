@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import '../../config/constants.dart';
-import '../../lib/firebase/remote_config.dart';
 import '../locale/localizations.dart';
 
 class SocialIconButton extends StatelessWidget {

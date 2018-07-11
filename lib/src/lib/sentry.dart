@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sentry/sentry.dart';
 
+import '../config/constants.dart';
+
 class Sentry {
   final SentryClient _client;
 
@@ -40,28 +42,28 @@ class Sentry {
 }
 
 Future<void> setupSentry() async {
-  final String environment =
-      bool.fromEnvironment('dart.vm.product') ? 'release' : 'debug';
+  if (debugMode) return;
 
-  if (environment == 'debug') return;
+  final String environment = debugMode ? 'debug' : 'release';
 
   final PackageInfo package = await PackageInfo.fromPlatform();
-  final DeviceInfoPlugin devicePlugin = DeviceInfoPlugin();
-  String device;
+  final DeviceInfoPlugin device = DeviceInfoPlugin();
+
+  String deviceModel;
   try {
     if (Platform.isAndroid) {
-      AndroidDeviceInfo deviceInfo = await devicePlugin.androidInfo;
-      device = deviceInfo.model;
+      AndroidDeviceInfo deviceInfo = await device.androidInfo;
+      deviceModel = deviceInfo.model;
     } else if (Platform.isIOS) {
-      IosDeviceInfo deviceInfo = await devicePlugin.iosInfo;
-      device = deviceInfo.model;
+      IosDeviceInfo deviceInfo = await device.iosInfo;
+      deviceModel = deviceInfo.model;
     }
   } on PlatformException {
-    device = 'Unknown';
+    deviceModel = 'Unknown';
   }
 
   final Sentry sentry = Sentry(
-    device: device,
+    device: deviceModel,
     environment: environment,
     release: package.version,
   );

@@ -1,22 +1,14 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-import '../lib/sentry.dart';
+import '../config/constants.dart';
 import '../lib/firebase/remote_config.dart';
-import './navigation.dart';
-
-Future<void> _setupApp() async {
-  setupSentry();
-  await setupRemoteConfig();
-
-  // await Future.delayed(Duration(seconds: 1));
-}
+import './app.dart';
 
 class AppLoading extends StatelessWidget {
   Widget _buildStack(Widget topChild, Key topChildKey, Widget bottomChild,
           Key bottomChildKey) =>
       Stack(
+        textDirection: TextDirection.ltr,
         children: <Widget>[
           Positioned(
             key: bottomChildKey,
@@ -29,18 +21,16 @@ class AppLoading extends StatelessWidget {
           Positioned(
             key: topChildKey,
             child: topChild,
-          )
+          ),
         ],
       );
 
   Widget _buildContainer(BuildContext context, AsyncSnapshot snapshot) {
-    final Color color = Theme.of(context).primaryColor;
-
     Widget firstChild = Container(
-      color: color,
+      color: Colors.white,
       child: Center(
         child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation(Colors.white),
+          valueColor: AlwaysStoppedAnimation(primaryColor),
         ),
       ),
     );
@@ -57,23 +47,23 @@ class AppLoading extends StatelessWidget {
 
         if (snapshot.hasError)
           secondChild = Container(
-            color: color,
+            color: Colors.white,
             child: Center(
               child: Icon(
                 Icons.mood_bad,
-                color: Colors.white,
+                color: primaryColor,
                 size: 56.0,
               ),
             ),
           );
         else
-          secondChild = AppNavigation();
+          secondChild = App();
 
         break;
     }
 
     return Container(
-      color: color,
+      color: Colors.white,
       child: AnimatedCrossFade(
         duration: kThemeAnimationDuration * 2.5,
         firstChild: firstChild,
@@ -87,7 +77,7 @@ class AppLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _setupApp(),
+      future: fetchRemoteConfig(),
       builder: _buildContainer,
     );
   }

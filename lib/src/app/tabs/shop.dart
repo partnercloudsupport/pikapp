@@ -41,7 +41,7 @@ class _ShopItem extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(
                   subtitle ?? '',
-                  style: TextStyle(color: Colors.black87, fontSize: 12.0),
+                  style: TextStyle(fontSize: 12.0),
                 ),
               ),
             ],

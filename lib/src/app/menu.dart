@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
+// import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import '../config/constants.dart';
@@ -15,14 +15,14 @@ class AppMenuButton extends StatelessWidget {
 
     final title = localizations.translate('title');
     final made_with = localizations.translate('made_with');
-    final PackageInfo package = await PackageInfo.fromPlatform();
+    // final PackageInfo package = await PackageInfo.fromPlatform();
 
     return showAboutDialog(
       context: value,
       applicationIcon:
           Image.asset('lib/resources/assets/icon.png', height: 48.0),
       applicationName: title,
-      applicationVersion: 'Version ${package.version}',
+      // applicationVersion: 'Version ${package.version}',
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

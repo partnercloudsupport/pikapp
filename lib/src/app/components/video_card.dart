@@ -62,7 +62,7 @@ class VideoCard extends StatelessWidget {
                       padding: EdgeInsets.only(top: 16.0),
                       child: Text(
                         description,
-                        style: TextStyle(color: Colors.black87, fontSize: 12.0),
+                        style: TextStyle(fontSize: 12.0),
                       ),
                     ),
                   ],

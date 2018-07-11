@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import '../config/constants.dart';
 import '../lib/firebase/analytics.dart';
-import '../lib/firebase/messaging.dart';
-import './loading.dart';
+import './navigation.dart';
 import './locale/localizations.dart';
 
-class App extends StatelessWidget {
-  App() {
-    messaging.configure(
-      onMessage: (Map<String, dynamic> message) {
-        debugPrint('onMessage: $message');
-      },
-      onLaunch: (Map<String, dynamic> message) {
-        debugPrint('onLaunch: $message');
-      },
-      onResume: (Map<String, dynamic> message) {
-        debugPrint('onResume: $message');
-      },
-    );
+class App extends StatefulWidget {
+  @override
+  AppData createState() => AppData();
 
-    messaging.requestNotificationPermissions();
-  }
+  static AppData of(BuildContext context) =>
+      context.ancestorStateOfType(TypeMatcher<AppData>());
+}
 
+class AppData extends State<App> {
   static final List<LocalizationsDelegate> localizationsDelegates = [
     AppLocalizations.delegate,
     GlobalMaterialLocalizations.delegate,
@@ -43,22 +35,32 @@ class App extends StatelessWidget {
     return supportedLocales.first;
   }
 
-  static String onGenerateTitle(BuildContext context) => 'PikApp';
-  // AppLocalizations.of(context).translate('title');
+  static String onGenerateTitle(BuildContext context) =>
+      AppLocalizations.of(context).translate('title');
+
+  Brightness brightness = Brightness.light;
+
+  void setBrightness(Brightness brightness) {
+    setState(() {
+      this.brightness = brightness;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AppLoading(),
+      home: AppNavigation(),
       localizationsDelegates: localizationsDelegates,
       localeResolutionCallback: localeResolutionCallback,
       navigatorObservers: navigatorObservers,
       onGenerateTitle: onGenerateTitle,
       supportedLocales: supportedLocales,
       theme: ThemeData(
+        brightness: brightness,
         fontFamily: 'Nunito',
-        primarySwatch: Colors.pink,
+        primarySwatch: primaryColor,
+        accentColor: brightness == Brightness.light ? null : primaryColor[200],
       ),
     );
   }
