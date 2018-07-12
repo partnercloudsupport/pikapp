@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import './components/buttons/review.dart';
+import '../components/buttons/review.dart';
+import '../locale/localizations.dart';
 import './fab.dart';
 import './item.dart';
-import './locale/localizations.dart';
 import './menu.dart';
 import './tabs/channel.dart';
 import './tabs/home.dart';
 import './tabs/shop.dart';
 
-class AppNavigation extends StatefulWidget {
+class AppScaffold extends StatefulWidget {
   @override
-  _AppNavigationState createState() => _AppNavigationState();
+  _AppScaffoldState createState() => _AppScaffoldState();
 }
 
-class _AppNavigationState extends State<AppNavigation>
-    with TickerProviderStateMixin<AppNavigation> {
+class _AppScaffoldState extends State<AppScaffold>
+    with TickerProviderStateMixin<AppScaffold> {
   int _currentIndex = 0;
   List<AppItem> _bodyItems;
   List<BottomNavigationBarItem> _navigationItems;
@@ -89,18 +89,14 @@ class _AppNavigationState extends State<AppNavigation>
       actions: <Widget>[AppMenuButton()],
     );
 
-    final Widget body = _bodyItems[_currentIndex];
-
-    final BottomNavigationBar navigationBar = BottomNavigationBar(
-      currentIndex: _currentIndex,
-      items: _navigationItems,
-      onTap: _onTap,
-    );
-
     return Scaffold(
       appBar: appBar,
-      body: body,
-      bottomNavigationBar: navigationBar,
+      body: _bodyItems[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: _navigationItems,
+        onTap: _onTap,
+      ),
       floatingActionButton: AppFloatingActionButton(),
     );
   }

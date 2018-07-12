@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 // import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
-import '../config/constants.dart';
-import './locale/localizations.dart';
+import '../../config/constants.dart';
+import '../locale/localizations.dart';
 
 class AppMenuButton extends StatelessWidget {
   Future<void> _onSelected(dynamic value) async {

@@ -19,6 +19,9 @@ Future<void> setupRemoteConfig() async {
   // final String data = await rootBundle.loadString(path);
   // final Map<String, dynamic> defaults = json.decode(data);
   // await remoteConfig.setDefaults(defaults);
+  await remoteConfig.setDefaults({
+    'text__title': 'PikApp',
+  });
 }
 
 Future<void> fetchRemoteConfig() async {

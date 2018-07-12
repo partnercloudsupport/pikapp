@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../config/constants.dart';
 import '../lib/firebase/analytics.dart';
-import './navigation.dart';
+import './home/home.dart';
 import './locale/localizations.dart';
 
 class App extends StatefulWidget {
@@ -48,20 +48,22 @@ class AppData extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = ThemeData(
+      brightness: brightness,
+      fontFamily: 'Nunito',
+      primarySwatch: primaryColor,
+      accentColor: brightness == Brightness.light ? null : primaryColor[200],
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AppNavigation(),
+      home: AppHome(),
       localizationsDelegates: localizationsDelegates,
       localeResolutionCallback: localeResolutionCallback,
       navigatorObservers: navigatorObservers,
       onGenerateTitle: onGenerateTitle,
       supportedLocales: supportedLocales,
-      theme: ThemeData(
-        brightness: brightness,
-        fontFamily: 'Nunito',
-        primarySwatch: primaryColor,
-        accentColor: brightness == Brightness.light ? null : primaryColor[200],
-      ),
+      theme: theme,
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../lib/firebase/analytics.dart';
-import './app.dart';
-import './locale/localizations.dart';
+import '../../lib/firebase/analytics.dart';
+import '../app.dart';
+import '../locale/localizations.dart';
 
 class AppFloatingActionButton extends StatelessWidget {
   @override
