@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppPlaceholder extends StatelessWidget {
+  AppPlaceholder({@required this.child});
+
+  final Widget child;
+
   static final BottomNavigationBarItem placeholderItem =
       BottomNavigationBarItem(
     icon: Icon(
@@ -10,16 +14,14 @@ class AppPlaceholder extends StatelessWidget {
     title: Text(''),
   );
 
-  static final Scaffold placeholderScaffold = Scaffold(
-    appBar: AppBar(),
-    body: Center(child: CircularProgressIndicator()),
-    bottomNavigationBar: BottomNavigationBar(
-      items: [placeholderItem, placeholderItem],
-      onTap: null,
-    ),
-    floatingActionButton: FloatingActionButton(onPressed: null),
-  );
-
   @override
-  Widget build(BuildContext context) => placeholderScaffold;
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(),
+        body: child,
+        bottomNavigationBar: BottomNavigationBar(
+          items: List.filled(3, placeholderItem),
+          onTap: null,
+        ),
+        floatingActionButton: FloatingActionButton(onPressed: () {}),
+      );
 }

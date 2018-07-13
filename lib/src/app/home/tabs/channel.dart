@@ -52,7 +52,7 @@ class _ChannelTabState extends State<ChannelTab>
 
     try {
       Map<String, dynamic> data =
-          await VideosApi.fetchData().timeout(Duration(seconds: 5));
+          await VideosApi.fetchData().timeout(Duration(seconds: 10));
 
       setState(() {
         _data = data;
@@ -60,7 +60,7 @@ class _ChannelTabState extends State<ChannelTab>
       });
 
       Scaffold.of(context).removeCurrentSnackBar();
-    } catch (error) {
+    } catch (exception) {
       _onError();
     }
   }
