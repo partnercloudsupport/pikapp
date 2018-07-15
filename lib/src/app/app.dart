@@ -3,15 +3,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../config/constants.dart';
 import '../lib/firebase/analytics.dart';
-import './home/home.dart';
-import './locale/localizations.dart';
+import 'home.dart';
+import 'locale/localizations.dart';
 
 class App extends StatefulWidget {
-  @override
-  AppData createState() => AppData();
-
   static AppData of(BuildContext context) =>
       context.ancestorStateOfType(TypeMatcher<AppData>());
+
+  @override
+  AppData createState() => AppData();
 }
 
 class AppData extends State<App> {

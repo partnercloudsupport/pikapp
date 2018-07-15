@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AppItem extends StatelessWidget {
-  AppItem({
+class HomeNavigationItem extends StatelessWidget {
+  HomeNavigationItem({
     @required Widget child,
     @required Icon icon,
     @required String title,

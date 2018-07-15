@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import './localizations.dart';
+import 'localizations.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   @override

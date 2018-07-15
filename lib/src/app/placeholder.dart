@@ -22,6 +22,9 @@ class AppPlaceholder extends StatelessWidget {
           items: List.filled(3, placeholderItem),
           onTap: null,
         ),
-        floatingActionButton: FloatingActionButton(onPressed: () {}),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          heroTag: null,
+        ),
       );
 }

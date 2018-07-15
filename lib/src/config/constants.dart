@@ -18,6 +18,9 @@ final String socialYoutubeUrl = 'https://urlgeni.us/youtube/pikatea';
 final String storeAndroidUrl =
     'http://play.google.com/store/apps/details?id=yt.pikatea.app';
 
+final String sentryDsn =
+    'https://b98c7b2b8d9649ec92e4802c87b30767:60e2747913514272b9fe9ac0aabc0868@sentry.io/289984';
+
 // Debug
 
 final bool debugMode = !bool.fromEnvironment('dart.vm.product');

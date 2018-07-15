@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../lib/firebase/remote_config.dart';
-import './localizations_delegate.dart';
+import 'localizations_delegate.dart';
 
 class AppLocalizations {
   static final delegate = AppLocalizationsDelegate();

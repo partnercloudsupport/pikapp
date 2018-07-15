@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
-import '../../../lib/videos.dart';
-import '../../components/video_list.dart';
-import '../../locale/localizations.dart';
+import '../../../../lib/videos.dart';
+import '../../../components/video_list.dart';
+import '../../../locale/localizations.dart';
 
 class ChannelTab extends StatefulWidget {
   @override

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../components/buttons/review.dart';
-import '../locale/localizations.dart';
-import './fab.dart';
-import './item.dart';
-import './menu.dart';
-import './tabs/channel.dart';
-import './tabs/home.dart';
-import './tabs/shop.dart';
+import '../../components/buttons/review.dart';
+import '../../locale/localizations.dart';
+import 'fab.dart';
+import 'item.dart';
+import 'menu.dart';
+import 'tabs/channel.dart';
+import 'tabs/home.dart';
+import 'tabs/shop.dart';
 
-class AppScaffold extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _AppScaffoldState createState() => _AppScaffoldState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _AppScaffoldState extends State<AppScaffold>
-    with TickerProviderStateMixin<AppScaffold> {
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin<HomeScreen> {
   int _currentIndex = 0;
-  List<AppItem> _bodyItems;
+  List<HomeNavigationItem> _bodyItems;
   List<BottomNavigationBarItem> _navigationItems;
 
   @override
@@ -27,22 +27,22 @@ class _AppScaffoldState extends State<AppScaffold>
 
     final AppLocalizations localizations = AppLocalizations.of(context);
 
-    _bodyItems = <AppItem>[
-      AppItem(
+    _bodyItems = <HomeNavigationItem>[
+      HomeNavigationItem(
         child: HomeTab(),
         icon: Icon(Icons.home),
         title: localizations.translate('home_tab_title'),
         vsync: this,
         key: PageStorageKey<String>('home'),
       ),
-      AppItem(
+      HomeNavigationItem(
         child: ChannelTab(),
         icon: Icon(FontAwesomeIcons.youtube),
         title: localizations.translate('channel_tab_title'),
         vsync: this,
         key: PageStorageKey<String>('channel'),
       ),
-      AppItem(
+      HomeNavigationItem(
         child: ShopTab(),
         icon: Icon(Icons.store),
         title: localizations.translate('shop_tab_title'),
@@ -54,13 +54,14 @@ class _AppScaffoldState extends State<AppScaffold>
     // Set animation controller (opacity and scale) to make screen visible
     _bodyItems[_currentIndex].controller.value = 1.0;
 
-    _navigationItems =
-        _bodyItems.map((AppItem item) => item.navigationItem).toList();
+    _navigationItems = _bodyItems
+        .map((HomeNavigationItem item) => item.navigationItem)
+        .toList();
   }
 
   @override
   void dispose() {
-    for (AppItem item in _bodyItems) item.controller.dispose();
+    for (HomeNavigationItem item in _bodyItems) item.controller.dispose();
 
     super.dispose();
   }
@@ -86,7 +87,7 @@ class _AppScaffoldState extends State<AppScaffold>
       centerTitle: true,
       title: Text(title),
       leading: ReviewIconButton(),
-      actions: <Widget>[AppMenuButton()],
+      actions: <Widget>[HomeMenuButton()],
     );
 
     return Scaffold(
@@ -97,7 +98,7 @@ class _AppScaffoldState extends State<AppScaffold>
         items: _navigationItems,
         onTap: _onTap,
       ),
-      floatingActionButton: AppFloatingActionButton(),
+      floatingActionButton: HomeFab(),
     );
   }
 }
