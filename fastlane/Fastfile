@@ -1,10 +1,8 @@
-ENV["SUPPLY_APK"] = "../build/app/outputs/apk/release/app-release.apk"
+ENV["SUPPLY_APK"] = "build/app/outputs/apk/release/app-release.apk"
 ENV["SUPPLY_JSON_KEY"] = "/Users/lrnz09/Development/Google_Play_Android_Developer-e96c8acff6e0.json"
 
 opt_out_usage
 setup_travis
-
-default_platform(:android)
 
 platform :android do
 
@@ -24,7 +22,7 @@ platform :android do
   lane :build do
     # ensure_git_status_clean(show_uncommitted_changes: true)
 
-    Dir.chdir("../../") do
+    Dir.chdir("../") do
       sh("flutter", "analyze")
       sh("flutter", "build", "apk")
     end
@@ -36,6 +34,30 @@ platform :android do
       supply(track: 'beta')
     else
       supply
+    end
+  end
+
+end
+
+platform :ios do
+
+  desc "Push a new release build to the App Store"
+  lane :release do
+    build
+    cert
+    sigh
+    gym
+    deliver
+  end
+
+
+  desc "Analyze the Flutter app"
+  lane :build do
+    # ensure_git_status_clean(show_uncommitted_changes: true)
+
+    Dir.chdir("../") do
+      sh("flutter", "analyze")
+      sh("flutter", "build", "ios", "--no-codesign")
     end
   end
 

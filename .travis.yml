@@ -2,27 +2,43 @@ branches:
   only:
     - master
 
-language: swift
-os: osx
-osx_image: xcode9.4
-
 cache:
+  bundler: true
+  cocoapods: true
   directories:
+    - $HOME/.android/build-cache
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
     - $HOME/.pub-cache
 
 before_install:
-  - brew update
-  - brew upgrade
+  - cd $PLATFORM
+  - bundle update
 install:
-  - brew install fastlane
-  - fastlane update_fastlane
-  - git clone https://github.com/flutter/flutter.git -b beta --depth 1
+  - bundle install
+  - cd ..
+  - git clone https://github.com/flutter/flutter.git
   - export PATH=`pwd`/flutter/bin:$PATH
-
 before_script:
-  - flutter doctor --verbose
   - flutter config --no-analytics
+  - flutter channel beta
+  - flutter doctor --verbose
   - flutter test
 script:
   - flutter packages get
-  - fastlane release
+  - cd $PLATFORM
+  - bundle exec fastlane release
+
+matrix:
+  include:
+    # Android
+    - language: android
+      env:
+        - PLATFORM=android
+
+    # iOS
+    - language: swift
+      os: osx
+      osx_image: xcode9.4
+      env:
+        - PLATFORM=ios

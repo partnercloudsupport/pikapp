@@ -64,10 +64,11 @@ class _AppHomeState extends State<AppHome> with AfterLayoutMixin<AppHome> {
             child: _isError
                 ? Center(
                     child: Icon(
-                    Icons.mood_bad,
-                    color: theme.accentColor,
-                    size: 56.0,
-                  ))
+                      Icons.mood_bad,
+                      color: theme.accentColor,
+                      size: 56.0,
+                    ),
+                  )
                 : Center(child: CircularProgressIndicator())),
         secondChild: HomeScreen(),
         crossFadeState:
