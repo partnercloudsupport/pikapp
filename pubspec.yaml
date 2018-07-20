@@ -14,6 +14,9 @@ dependencies:
   cloud_firestore: ^0.7.3
   cloud_functions: ^0.0.1
   device_info: ^0.2.0
+  dynamic_theme:
+    git:
+      url: git://github.com/Norbert515/dynamic_theme.git
   firebase_analytics: ^1.0.1
   firebase_messaging: ^1.0.2
   firebase_remote_config: ^0.0.2

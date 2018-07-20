@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import '../config/constants.dart';
 import '../lib/firebase/analytics.dart';
 import 'home.dart';
 import 'locale/localizations.dart';
 
 class App extends StatefulWidget {
+  App({@required this.theme});
+
   static AppData of(BuildContext context) =>
       context.ancestorStateOfType(TypeMatcher<AppData>());
+
+  final ThemeData theme;
 
   @override
   AppData createState() => AppData();
@@ -38,23 +41,8 @@ class AppData extends State<App> {
   static String onGenerateTitle(BuildContext context) =>
       AppLocalizations.of(context).translate('title');
 
-  Brightness brightness = Brightness.light;
-
-  void setBrightness(Brightness brightness) {
-    setState(() {
-      this.brightness = brightness;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = ThemeData(
-      brightness: brightness,
-      fontFamily: 'Nunito',
-      primarySwatch: primaryColor,
-      accentColor: brightness == Brightness.light ? null : primaryColor[200],
-    );
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AppHome(),
@@ -63,7 +51,7 @@ class AppData extends State<App> {
       navigatorObservers: navigatorObservers,
       onGenerateTitle: onGenerateTitle,
       supportedLocales: supportedLocales,
-      theme: theme,
+      theme: widget.theme,
     );
   }
 }

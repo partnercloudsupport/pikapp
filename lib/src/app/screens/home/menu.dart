@@ -6,18 +6,12 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import '../../../config/constants.dart';
 import '../../locale/localizations.dart';
-import '../../app.dart';
+import 'theme.dart';
 
-void _changeTheme(BuildContext context) {
-  AppData app = App.of(context);
+ThemeDialog _buildThemeDialog(BuildContext context) => ThemeDialog();
 
-  switch (app.brightness) {
-    case Brightness.light:
-      return app.setBrightness(Brightness.dark);
-    default:
-      return app.setBrightness(Brightness.light);
-  }
-}
+void _changeTheme(BuildContext context) =>
+    showDialog<Null>(context: context, builder: _buildThemeDialog);
 
 Future<void> _sendFeedback() => url_launcher.launch(storeAndroidUrl);
 

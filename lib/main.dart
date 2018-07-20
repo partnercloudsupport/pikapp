@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'src/app/app.dart';
+import 'src/app/theme.dart';
 import 'src/lib/firebase/messaging.dart';
 import 'src/lib/firebase/remote_config.dart';
 import 'src/lib/sentry.dart';
@@ -17,5 +17,5 @@ Future<void> setupApp() async {
 
 void main() async {
   await setupApp();
-  runApp(App());
+  runApp(AppTheme());
 }

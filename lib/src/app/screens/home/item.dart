@@ -9,7 +9,7 @@ class HomeNavigationItem extends StatelessWidget {
     Key key,
   })  : _child = child,
         controller = AnimationController(
-          duration: kThemeAnimationDuration,
+          duration: kThemeAnimationDuration * 0.75,
           vsync: vsync,
         ),
         navigationItem = BottomNavigationBarItem(

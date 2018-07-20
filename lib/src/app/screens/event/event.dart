@@ -7,7 +7,13 @@ class EventScreen extends StatelessWidget {
           title: Text('Event'),
         ),
         body: Center(
-          child: Text('There\'s no events at the moment, try again tomorrow!'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.mood_bad),
+              Text('There\'s no events at the moment, try again tomorrow!'),
+            ],
+          ),
         ),
       );
 }

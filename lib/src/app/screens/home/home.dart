@@ -18,8 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with TickerProviderStateMixin<HomeScreen> {
   int _currentIndex = 0;
-  List<HomeNavigationItem> _bodyItems;
-  List<BottomNavigationBarItem> _navigationItems;
+  List<HomeNavigationItem> _items;
 
   @override
   void didChangeDependencies() {
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     final AppLocalizations localizations = AppLocalizations.of(context);
 
-    _bodyItems = <HomeNavigationItem>[
+    _items = <HomeNavigationItem>[
       HomeNavigationItem(
         child: HomeTab(),
         icon: Icon(Icons.home),
@@ -52,16 +51,12 @@ class _HomeScreenState extends State<HomeScreen>
     ];
 
     // Set animation controller (opacity and scale) to make screen visible
-    _bodyItems[_currentIndex].controller.value = 1.0;
-
-    _navigationItems = _bodyItems
-        .map((HomeNavigationItem item) => item.navigationItem)
-        .toList();
+    _items[_currentIndex].controller.value = 1.0;
   }
 
   @override
   void dispose() {
-    for (HomeNavigationItem item in _bodyItems) item.controller.dispose();
+    for (HomeNavigationItem item in _items) item.controller.dispose();
 
     super.dispose();
   }
@@ -70,13 +65,14 @@ class _HomeScreenState extends State<HomeScreen>
     if (index == _currentIndex) return;
 
     // Wait for the old screen transition to complete
-    await _bodyItems[_currentIndex].controller.reverse();
+    await _items[_currentIndex].controller.reverse();
 
     // Then update the index and animate the screen
     setState(() {
       _currentIndex = index;
-      _bodyItems[_currentIndex].controller.forward();
     });
+
+    _items[_currentIndex].controller.forward();
   }
 
   @override
@@ -90,12 +86,15 @@ class _HomeScreenState extends State<HomeScreen>
       actions: <Widget>[HomeMenuButton()],
     );
 
+    final List<BottomNavigationBarItem> navigationItems =
+        _items.map((HomeNavigationItem item) => item.navigationItem).toList();
+
     return Scaffold(
       appBar: appBar,
-      body: _bodyItems[_currentIndex],
+      body: _items[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        items: _navigationItems,
+        items: navigationItems,
         onTap: _onTap,
       ),
       floatingActionButton: HomeFab(),
