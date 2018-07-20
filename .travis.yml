@@ -1,6 +1,6 @@
 branches:
   only:
-  - master
+    - master
 
 language: swift
 os: osx
@@ -11,12 +11,18 @@ cache:
     - $HOME/.pub-cache
 
 before_install:
+  - brew update
+  - brew upgrade
+install:
+  - brew install fastlane
+  - fastlane update_fastlane
   - git clone https://github.com/flutter/flutter.git -b beta --depth 1
-  - ./flutter/bin/flutter doctor --verbose
-# install:
-#   - bundle install
+  - export PATH=`pwd`/flutter/bin:$PATH
 
 before_script:
-  - ./flutter/bin/flutter test
+  - flutter doctor --verbose
+  - flutter config --no-analytics
+  - flutter test
 script:
+  - flutter packages get
   - fastlane release
