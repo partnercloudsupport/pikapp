@@ -1,7 +1,22 @@
+branches:
+  only:
+  - master
+
 language: swift
 os: osx
 osx_image: xcode9.4
-install:
-  - bundle install
+
+cache:
+  directories:
+    - $HOME/.pub-cache
+
+before_install:
+  - git clone https://github.com/flutter/flutter.git -b beta --depth 1
+  - ./flutter/bin/flutter doctor --verbose
+# install:
+#   - bundle install
+
+before_script:
+  - ./flutter/bin/flutter test
 script:
-  - fastlane beta
+  - fastlane release
