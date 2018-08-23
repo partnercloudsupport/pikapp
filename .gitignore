@@ -23,5 +23,9 @@ doc/api/
 .idea
 .vscode/
 
+# Certs
+*.mobileprovision
+*.cer
+
 # Secret
 .gitsecret/keys/random_seed

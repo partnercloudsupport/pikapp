@@ -2,7 +2,11 @@ ENV["SUPPLY_APK"] = "build/app/outputs/apk/release/app-release.apk"
 ENV["SUPPLY_JSON_KEY"] = "/Users/lrnz09/Development/Google_Play_Android_Developer-e96c8acff6e0.json"
 
 opt_out_usage
-setup_travis
+
+before_all do
+  update_fastlane
+  setup_travis
+end
 
 platform :android do
 
@@ -22,11 +26,9 @@ platform :android do
   lane :build do
     # ensure_git_status_clean(show_uncommitted_changes: true)
 
-    Dir.chdir("../") do
       sh("flutter", "analyze")
       sh("flutter", "build", "apk")
     end
-  end
 
   desc "Upload a new build to the Google Play"
   lane :upload do |options|
@@ -55,10 +57,8 @@ platform :ios do
   lane :build do
     # ensure_git_status_clean(show_uncommitted_changes: true)
 
-    Dir.chdir("../") do
-      sh("flutter", "analyze")
-      sh("flutter", "build", "ios", "--no-codesign")
-    end
+    sh("flutter", "analyze")
+    sh("flutter", "build", "ios", "--no-codesign")
   end
 
 end

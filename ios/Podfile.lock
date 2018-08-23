@@ -134,7 +134,7 @@ PODS:
   - path_provider (0.0.1):
     - Flutter
   - Protobuf (3.5.0)
-  - share (0.0.1):
+  - share (0.5.2):
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
@@ -240,7 +240,7 @@ SPEC CHECKSUMS:
   package_info: d7c98b64f60add4c2908b9d94d82a45d3c8827ad
   path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
-  share: 8d04605548e55f7ce4ebb7b3e933f3c85028c9cf
+  share: 222b5dcc8031238af9d7de91149df65bad1aef75
   shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
   url_launcher: 92b89c1029a0373879933c21642958c874539095
 

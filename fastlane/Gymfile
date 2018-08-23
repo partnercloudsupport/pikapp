@@ -10,9 +10,9 @@
 
 # sdk("iphoneos9.0")
 
-# output_directory("./")
+output_directory("./ios")
 
-workspace("Runner.xcworkspace")
+workspace("./ios/Runner.xcworkspace")
 scheme("Runner")
 
 clean(true)

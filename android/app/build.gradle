@@ -38,11 +38,12 @@ android {
 
     defaultConfig {
         applicationId "yt.pikatea.app"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -57,6 +58,9 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            minifyEnabled true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -73,3 +77,5 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

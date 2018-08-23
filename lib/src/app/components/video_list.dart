@@ -8,8 +8,10 @@ class VideoList extends StatelessWidget {
 
   final List items;
 
-  Widget _buildItem(BuildContext context, int index) =>
-      VideoCard.fromData(items[index]);
+  Widget _buildItem(BuildContext context, int index) {
+    Map<String, dynamic> data = Map<String, dynamic>.unmodifiable(items[index]);
+    return VideoCard.fromData(data);
+  }
 
   Widget _buildGrid(BuildContext context, Orientation orientation) {
     // Create a grid with 1 column in portrait mode, or 3 columns in landscape mode.

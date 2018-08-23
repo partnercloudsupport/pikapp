@@ -1,6 +1,6 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../../../lib/dynamic_theme.dart';
 import '../../locale/localizations.dart';
 
 class ThemeDialog extends StatelessWidget {

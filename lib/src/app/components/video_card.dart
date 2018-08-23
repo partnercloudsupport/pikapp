@@ -26,7 +26,7 @@ class VideoCard extends StatelessWidget {
 
   void _watch() => url_launcher.launch(videoUrl);
 
-  void _share() => share(videoUrl);
+  void _share() => Share.share(videoUrl);
 
   @override
   Widget build(BuildContext context) {

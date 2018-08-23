@@ -1,4 +1,3 @@
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
 import '../lib/firebase/remote_config.dart';
@@ -10,7 +9,7 @@ class AppHome extends StatefulWidget {
   _AppHomeState createState() => _AppHomeState();
 }
 
-class _AppHomeState extends State<AppHome> with AfterLayoutMixin<AppHome> {
+class _AppHomeState extends State<AppHome> {
   static Widget _buildLayout(Widget topChild, Key topChildKey,
       Widget bottomChild, Key bottomChildKey) {
     return Stack(
@@ -34,6 +33,13 @@ class _AppHomeState extends State<AppHome> with AfterLayoutMixin<AppHome> {
   bool _isLoading = true;
   bool _isError = false;
 
+  @override
+  void initState() {
+    super.initState();
+
+    _onLoading();
+  }
+
   void _onLoading() async {
     setState(() {
       _isError = false;
@@ -55,21 +61,26 @@ class _AppHomeState extends State<AppHome> with AfterLayoutMixin<AppHome> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final Widget child = _isError
+        ? Center(
+            child: Icon(
+              Icons.sentiment_very_dissatisfied,
+              color: theme.accentColor,
+              size: 56.0,
+            ),
+          )
+        // : Center(child: CircularProgressIndicator())),
+        : Center(
+            child: Image.asset('lib/resources/assets/icon.png', height: 48.0),
+          );
 
     return Container(
       color: Colors.white,
       child: AnimatedCrossFade(
         duration: kThemeAnimationDuration * 2.5,
         firstChild: AppPlaceholder(
-            child: _isError
-                ? Center(
-                    child: Icon(
-                      Icons.mood_bad,
-                      color: theme.accentColor,
-                      size: 56.0,
-                    ),
-                  )
-                : Center(child: CircularProgressIndicator())),
+          child: child,
+        ),
         secondChild: HomeScreen(),
         crossFadeState:
             _isLoading ? CrossFadeState.showFirst : CrossFadeState.showSecond,
@@ -77,7 +88,4 @@ class _AppHomeState extends State<AppHome> with AfterLayoutMixin<AppHome> {
       ),
     );
   }
-
-  @override
-  void afterFirstLayout(BuildContext context) => _onLoading();
 }

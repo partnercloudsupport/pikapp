@@ -5,19 +5,9 @@ import '../lib/firebase/analytics.dart';
 import 'home.dart';
 import 'locale/localizations.dart';
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   App({@required this.theme});
 
-  static AppData of(BuildContext context) =>
-      context.ancestorStateOfType(TypeMatcher<AppData>());
-
-  final ThemeData theme;
-
-  @override
-  AppData createState() => AppData();
-}
-
-class AppData extends State<App> {
   static final List<LocalizationsDelegate> localizationsDelegates = [
     AppLocalizations.delegate,
     GlobalMaterialLocalizations.delegate,
@@ -41,6 +31,8 @@ class AppData extends State<App> {
   static String onGenerateTitle(BuildContext context) =>
       AppLocalizations.of(context).translate('title');
 
+  final ThemeData theme;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,7 +43,7 @@ class AppData extends State<App> {
       navigatorObservers: navigatorObservers,
       onGenerateTitle: onGenerateTitle,
       supportedLocales: supportedLocales,
-      theme: widget.theme,
+      theme: theme,
     );
   }
 }
