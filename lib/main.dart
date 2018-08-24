@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'src/app/theme.dart';
-import 'src/lib/firebase/messaging.dart';
-import 'src/lib/firebase/remote_config.dart';
-import 'src/lib/sentry.dart';
+import 'screens/theme.dart';
+import 'services/firebase/messaging.dart';
+import 'services/firebase/remote_config.dart';
+import 'services/sentry.dart';
 
 Future<void> setupApp() async {
-  setupSentry();
+  await setupSentry();
   setupMessaging();
   await setupRemoteConfig();
 
