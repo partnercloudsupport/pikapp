@@ -59,7 +59,7 @@ class _ChannelTabState extends State<ChannelTab>
       });
 
       Scaffold.of(context).removeCurrentSnackBar();
-    } catch (exception) {
+    } on Exception {
       _onError();
     }
   }
@@ -69,7 +69,10 @@ class _ChannelTabState extends State<ChannelTab>
     final localizations = AppLocalizations.of(context);
     final themeData = Theme.of(context);
 
-    final List items = _data.containsKey('items') ? _data['items'] : [];
+    final items = List<Map>.unmodifiable(
+      _data.containsKey('items') ? _data['items'] : [],
+    );
+
     final child = _isError
         ? Center(
             child: RaisedButton.icon(

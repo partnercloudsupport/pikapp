@@ -57,28 +57,22 @@ class ShopTab extends StatelessWidget {
       BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
     if (!snapshot.hasData) return const LinearProgressIndicator();
 
-    final documentsCount = snapshot.data.documents.length;
-
-    return OrientationBuilder(
-      builder: (context, orientation) => StaggeredGridView.countBuilder(
-            // Create a grid with 2 columns in portrait mode,
-            // or 4 columns in landscape mode.
-            crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
-            itemCount: documentsCount,
-            itemBuilder: (context, index) {
-              final document = snapshot.data.documents[index];
-              return _ShopItem(
-                id: document.documentID,
-                title: document['title'],
-                subtitle: document['subtitle'],
-                imageUrl: document['imageUrl'],
-              );
-            },
-            padding: const EdgeInsets.all(8.0),
-            staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
-            mainAxisSpacing: 40.0,
-            crossAxisSpacing: 4.0,
-          ),
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 2,
+      itemCount: snapshot.data.documents.length,
+      itemBuilder: (context, index) {
+        final document = snapshot.data.documents[index];
+        return _ShopItem(
+          id: document.documentID,
+          title: document['title'],
+          subtitle: document['subtitle'],
+          imageUrl: document['imageUrl'],
+        );
+      },
+      padding: const EdgeInsets.all(8.0).copyWith(bottom: 240.0),
+      staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
+      mainAxisSpacing: 2.0,
+      crossAxisSpacing: 2.0,
     );
   }
 

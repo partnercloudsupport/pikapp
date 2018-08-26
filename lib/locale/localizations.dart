@@ -10,5 +10,5 @@ class AppLocalizations {
   static AppLocalizations of(BuildContext context) =>
       Localizations.of<AppLocalizations>(context, AppLocalizations);
 
-  String translate(String key) => remoteConfig?.getString('text__$key') ?? '';
+  String translate(String key) => remoteConfig.getString('text__$key') ?? '';
 }

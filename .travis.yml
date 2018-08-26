@@ -2,6 +2,8 @@ branches:
   only:
     - master
 
+if: tag IS present
+
 cache:
   bundler: true
   cocoapods: true
