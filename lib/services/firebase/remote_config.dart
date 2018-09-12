@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 // import 'package:flutter/services.dart';
 
-import '../../config/constants.dart';
+import '../../services/sentry/client.dart';
 
 RemoteConfig remoteConfig;
 
@@ -27,13 +27,9 @@ Future<void> setupRemoteConfig() async {
 Future<void> fetchRemoteConfig() async {
   // Using zero duration to force fetching from remote server in debug.
   final expiration = debugMode ? Duration(seconds: 0) : Duration(hours: 8);
-  try {
-    await remoteConfig.fetch(expiration: expiration).timeout(
-          Duration(seconds: 10),
-        );
-    await remoteConfig.activateFetched();
-  } on FetchThrottledException catch (exception) {
-    // Fetch throttled.
-    print(exception);
-  }
+
+  await remoteConfig.fetch(expiration: expiration).timeout(
+        Duration(seconds: 10),
+      );
+  await remoteConfig.activateFetched();
 }

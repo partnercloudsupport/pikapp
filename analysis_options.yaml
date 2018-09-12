@@ -2,6 +2,8 @@ analyzer:
   exclude:
     - android/**
     - ios/**
+  language:
+    enableSuperMixins: true
 
 linter:
   rules:

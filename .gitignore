@@ -29,3 +29,4 @@ doc/api/
 
 # Secret
 .gitsecret/keys/random_seed
+lib/services/sentry/dsn.dart

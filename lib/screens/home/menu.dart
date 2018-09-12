@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-// import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import 'package:pikapp/config/constants.dart';

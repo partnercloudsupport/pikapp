@@ -15,41 +15,44 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
+### analyze
+```
+fastlane analyze
+```
+Analyze the Flutter app
+
+----
+
 ## Android
-### android beta
-```
-fastlane android beta
-```
-Push a new beta build to the Play Store
-### android release
-```
-fastlane android release
-```
-Push a new release build to the Play Store
 ### android build
 ```
 fastlane android build
 ```
-Build a new version of the app
+Build a new APK of the app
 ### android upload
 ```
 fastlane android upload
 ```
 Upload a new build to the Google Play
+### android release
+```
+fastlane android release
+```
+Push a new release build to the Play Store
 
 ----
 
 ## iOS
+### ios build
+```
+fastlane ios build
+```
+Build a new IPA of the app
 ### ios release
 ```
 fastlane ios release
 ```
 Push a new release build to the App Store
-### ios build
-```
-fastlane ios build
-```
-Analyze the Flutter app
 
 ----
 

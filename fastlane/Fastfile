@@ -1,64 +1,64 @@
 ENV["SUPPLY_APK"] = "build/app/outputs/apk/release/app-release.apk"
 ENV["SUPPLY_JSON_KEY"] = "/Users/lrnz09/Development/Google_Play_Android_Developer-e96c8acff6e0.json"
 
-opt_out_usage
-
 before_all do
   update_fastlane
   setup_travis
 end
 
+desc "Analyze the Flutter app"
+lane :analyze do
+  Dir.chdir("..") do
+    sh("flutter", "format", "lib")
+    sh("flutter", "analyze")
+  end
+end
+
 platform :android do
 
-  desc "Push a new beta build to the Play Store"
-  lane :beta do
-    build
-    upload(beta: true)
-  end
-
-  desc "Push a new release build to the Play Store"
-  lane :release do
-    build
-    upload
-  end
-
-  desc "Build a new version of the app"
+  desc "Build a new APK of the app"
   lane :build do
-    # ensure_git_status_clean(show_uncommitted_changes: true)
-
-      sh("flutter", "analyze")
+    Dir.chdir("..") do
       sh("flutter", "build", "apk")
     end
+  end
 
   desc "Upload a new build to the Google Play"
   lane :upload do |options|
     if options[:beta]
-      supply(track: 'beta')
+      supply(track: "beta")
     else
       supply
     end
+  end
+
+  desc "Push a new release build to the Play Store"
+  lane :release do
+    analyze
+    build
+    # upload(beta: true)
+    upload
   end
 
 end
 
 platform :ios do
 
+  desc "Build a new IPA of the app"
+  lane :build do
+    Dir.chdir("..") do
+      sh("flutter", "build", "ios", "--no-codesign")
+    end
+  end
+
   desc "Push a new release build to the App Store"
   lane :release do
+    analyze
     build
     cert
     sigh
     gym
     deliver
-  end
-
-
-  desc "Analyze the Flutter app"
-  lane :build do
-    # ensure_git_status_clean(show_uncommitted_changes: true)
-
-    sh("flutter", "analyze")
-    sh("flutter", "build", "ios", "--no-codesign")
   end
 
 end

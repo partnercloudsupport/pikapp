@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:pikapp/locale/localizations.dart';
-import 'package:pikapp/services/videos.dart';
 import 'package:pikapp/widgets/video_list.dart';
+
+var _cachedData = Map<String, dynamic>.unmodifiable({});
 
 class ChannelTab extends StatefulWidget {
   @override
@@ -30,7 +32,7 @@ class _ChannelTabState extends State<ChannelTab>
     );
   }
 
-  Map<String, dynamic> _data = VideosApi.data;
+  Map<String, dynamic> _data = _cachedData;
   bool _isError = false;
   bool _isRefresh = false;
 
@@ -51,10 +53,13 @@ class _ChannelTabState extends State<ChannelTab>
     });
 
     try {
-      final data = await VideosApi.fetchData().timeout(Duration(seconds: 10));
+      final Map response = await CloudFunctions.instance
+          .call(functionName: 'getVideos')
+          .timeout(Duration(seconds: 10));
+      _cachedData = Map<String, dynamic>.unmodifiable(response);
 
       setState(() {
-        _data = data;
+        _data = _cachedData;
         _isError = false;
       });
 

@@ -51,8 +51,7 @@ class _AppHomeState extends State<AppHome> {
       setState(() {
         _isLoading = false;
       });
-    } on Exception catch (exception) {
-      print(exception);
+    } on Exception {
       setState(() {
         _isError = true;
       });
